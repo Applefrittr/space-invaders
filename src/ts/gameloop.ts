@@ -1,7 +1,7 @@
 import { defender } from "./defender";
 
-export const gameLoop = () => {
-  const space = document.querySelector("#space");
+export function gameLoop() {
+  const space = document.querySelector("#space") as HTMLCanvasElement;
 
   space.width = window.innerWidth;
   space.height = window.innerHeight;
@@ -25,4 +25,4 @@ export const gameLoop = () => {
   };
 
   animate();
-};
+}

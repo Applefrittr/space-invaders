@@ -15,11 +15,11 @@ export function defender() {
     space: false,
   };
 
-  const draw = (ctx) => {
+  const draw = (ctx: CanvasRenderingContext2D) => {
     ctx.fillRect(position.x, position.y, dimensions.width, dimensions.height);
   };
 
-  const keysDown = (key) => {
+  const keysDown = (key: string) => {
     switch (key) {
       case "d":
         keysPressed.d = true;
@@ -35,7 +35,7 @@ export function defender() {
     }
   };
 
-  const keysUp = (key) => {
+  const keysUp = (key: string) => {
     switch (key) {
       case "d":
         keysPressed.d = false;
@@ -51,7 +51,7 @@ export function defender() {
     }
   };
 
-  const updateDefender = (ctx) => {
+  const updateDefender = (ctx: CanvasRenderingContext2D) => {
     draw(ctx);
     if (!keysPressed.a && !keysPressed.d && !keysPressed.space) return;
     if (keysPressed.a && position.x >= 0) position.x -= 10;
