@@ -1,6 +1,9 @@
-import { defender } from "./defender";
+import { Defender } from "./defender";
+import { invaderFactory } from "./invader";
 
 export function gameLoop() {
+  let level = 1;
+
   const space = document.querySelector("#space") as HTMLCanvasElement;
 
   space.width = window.innerWidth;
@@ -8,20 +11,25 @@ export function gameLoop() {
 
   const ctx = space.getContext("2d");
 
-  const player = defender();
-
+  /** Create the player by calling Defender's constructor and adding event listeners */
+  const player = new Defender();
   window.addEventListener("keydown", ({ key }) => {
-    player.keysDown(key);
+    player.keyDown(key);
+  });
+  window.addEventListener("keyup", ({ key }) => {
+    player.keyUp(key);
   });
 
-  window.addEventListener("keyup", ({ key }) => {
-    player.keysUp(key);
-  });
+  const invaders = invaderFactory(20, 5, 1);
 
   const animate = () => {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, space.width, space.height);
-    player.updateDefender(ctx);
+    player.update(ctx);
+
+    invaders.forEach((invader) => {
+      invader.update(ctx);
+    });
   };
 
   animate();

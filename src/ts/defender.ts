@@ -1,68 +1,67 @@
-export function defender() {
-  const dimensions = {
-    width: 50,
-    height: 50,
-  };
+export class Defender {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+  dx: number;
+  activeKey: { a: boolean; d: boolean; space: boolean };
 
-  const position = {
-    x: window.innerWidth / 2 - dimensions.width / 2,
-    y: window.innerHeight - dimensions.height - 20,
-  };
+  constructor() {
+    this.width = 50;
+    this.height = 50;
+    this.x = window.innerWidth / 2 - this.width / 2;
+    this.y = window.innerHeight - this.height - 20;
+    this.dx = 10;
+    this.activeKey = {
+      a: false,
+      d: false,
+      space: false,
+    };
+  }
 
-  const keysPressed = {
-    a: false,
-    d: false,
-    space: false,
-  };
+  draw(ctx: CanvasRenderingContext2D) {
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
 
-  const draw = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillRect(position.x, position.y, dimensions.width, dimensions.height);
-  };
-
-  const keysDown = (key: string) => {
+  keyDown(key: string) {
     switch (key) {
       case "d":
-        keysPressed.d = true;
+        this.activeKey.d = true;
         break;
       case "a":
-        keysPressed.a = true;
+        this.activeKey.a = true;
         break;
       case " ":
-        keysPressed.space = true;
+        this.activeKey.space = true;
         break;
       default:
         return;
     }
-  };
+  }
 
-  const keysUp = (key: string) => {
+  keyUp(key: string) {
     switch (key) {
       case "d":
-        keysPressed.d = false;
+        this.activeKey.d = false;
         break;
       case "a":
-        keysPressed.a = false;
+        this.activeKey.a = false;
         break;
       case " ":
-        keysPressed.space = false;
+        this.activeKey.space = false;
         break;
       default:
         return;
     }
-  };
+  }
 
-  const updateDefender = (ctx: CanvasRenderingContext2D) => {
-    draw(ctx);
-    if (!keysPressed.a && !keysPressed.d && !keysPressed.space) return;
-    if (keysPressed.a && position.x >= 0) position.x -= 10;
-    if (keysPressed.d && position.x + dimensions.width <= window.innerWidth)
-      position.x += 10;
-    if (keysPressed.space) console.log("space");
-  };
-
-  return {
-    keysDown,
-    keysUp,
-    updateDefender,
-  };
+  update(ctx: CanvasRenderingContext2D) {
+    console.log("update");
+    this.draw(ctx);
+    if (!this.activeKey.a && !this.activeKey.d && !this.activeKey.space) return;
+    if (this.activeKey.a && this.x >= 0) this.x -= this.dx;
+    if (this.activeKey.d && this.x + this.width <= window.innerWidth)
+      this.x += this.dx;
+    if (this.activeKey.space) console.log("space");
+  }
 }
