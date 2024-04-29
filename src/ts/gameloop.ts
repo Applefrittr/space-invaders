@@ -1,5 +1,5 @@
 import { Defender } from "./defender";
-import { invaderFactory } from "./invader";
+import { createFleet } from "./createFleet";
 
 export function gameLoop() {
   let level = 1;
@@ -11,7 +11,6 @@ export function gameLoop() {
 
   const ctx = space.getContext("2d");
 
-  /** Create the player by calling Defender's constructor and adding event listeners */
   const player = new Defender();
   window.addEventListener("keydown", ({ key }) => {
     player.keyDown(key);
@@ -20,7 +19,7 @@ export function gameLoop() {
     player.keyUp(key);
   });
 
-  const invaders = invaderFactory(20, 5, 1);
+  const invaders = createFleet(20, 5, 1, 60);
 
   const animate = () => {
     requestAnimationFrame(animate);

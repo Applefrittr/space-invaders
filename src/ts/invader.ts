@@ -5,6 +5,10 @@ export class Invader {
   y: number;
   dx: number;
   dy: number;
+  bounds: {
+    rightX: number;
+    leftX: number;
+  };
 
   constructor(posX: number, posY: number, velX: number, velY: number) {
     this.width = 50;
@@ -13,6 +17,18 @@ export class Invader {
     this.y = posY;
     this.dx = velX;
     this.dy = velY;
+    this.bounds = {
+      rightX: innerWidth,
+      leftX: 0,
+    };
+  }
+
+  /**Set bounds of this Invader relative to it's position in fleet, critical to keep Invaders moving in formation */
+  setBounds(currPos: number, fleetCount: number) {
+    this.bounds.rightX = this.x;
+    if (fleetCount >= 20) {
+      this.bounds.leftX = 60 * 20 - 60 * (currPos + 1);
+    } else this.bounds.leftX = 60 * fleetCount - 60 * (currPos + 1);
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -23,26 +39,13 @@ export class Invader {
   update(ctx: CanvasRenderingContext2D) {
     this.draw(ctx);
     this.x -= this.dx;
-    if (this.x <= 0) {
+    if (this.x <= this.bounds.leftX) {
       this.dx = -this.dx;
       console.log("switch");
     }
-    if (this.x >= window.innerWidth - this.width) {
+    if (this.x >= this.bounds.rightX) {
       this.dx = -this.dx;
       console.log("switch");
     }
   }
 }
-
-export const invaderFactory = (count: number, velX: number, velY: number) => {
-  const invaderArray: Invader[] = [];
-  let posX = window.innerWidth - 75;
-  let posY = 50;
-
-  for (let i = 0; i < count; i++) {
-    invaderArray.push(new Invader(posX, posY, velX, velY));
-    posX -= 75;
-  }
-
-  return invaderArray;
-};
