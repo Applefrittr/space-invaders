@@ -19,7 +19,7 @@ export function gameLoop() {
     player.keyUp(key);
   });
 
-  const invaders = createFleet(20, 5, 1, 60);
+  const invaders = createFleet(112, 5, 1, 60);
 
   const animate = () => {
     requestAnimationFrame(animate);
