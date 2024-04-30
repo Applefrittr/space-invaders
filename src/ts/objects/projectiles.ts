@@ -1,4 +1,4 @@
-import { Projectile } from "./projectile";
+import { Projectile } from "../classes/projectile";
 
 export const projectileArray = () => {
   const arr: Projectile[] = [];

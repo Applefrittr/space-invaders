@@ -1,4 +1,4 @@
-import { projectileList } from "./projectileArray";
+import { projectileList } from "../objects/projectiles";
 
 export class Projectile {
   width: number;

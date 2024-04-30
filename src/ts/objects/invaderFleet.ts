@@ -1,4 +1,4 @@
-import { Invader } from "./invader";
+import { Invader } from "../classes/invader";
 
 export const invaderFleet = () => {
   const arr: Invader[] = [];

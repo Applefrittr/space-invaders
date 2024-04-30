@@ -1,6 +1,6 @@
-import { Invader } from "../invader";
-import { Defender } from "../defender";
-import { Projectile } from "../projectile";
+import { Invader } from "../classes/invader";
+import { Defender } from "../classes/defender";
+import { Projectile } from "../classes/projectile";
 
 export const detectCollision = (
   projectile: Projectile,

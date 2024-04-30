@@ -1,6 +1,6 @@
-import { Defender } from "./defender";
-import { projectileList } from "./projectileArray";
-import { fleet } from "./invaderFleet";
+import { Defender } from "./classes/defender";
+import { projectileList } from "./objects/projectiles";
+import { fleet } from "./objects/invaderFleet";
 import { detectCollision } from "./utils/detectCollision";
 
 export function gameLoop() {

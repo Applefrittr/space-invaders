@@ -1,5 +1,5 @@
 import { Projectile } from "./projectile";
-import { projectileList } from "./projectileArray";
+import { projectileList } from "../objects/projectiles";
 
 export class Defender {
   width: number;
