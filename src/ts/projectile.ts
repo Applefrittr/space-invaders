@@ -5,6 +5,7 @@ export class Projectile {
   height: number;
   x: number;
   y: number;
+  radius: number;
   dy: number;
   color: string;
 
@@ -13,6 +14,7 @@ export class Projectile {
     this.height = 5;
     this.x = x;
     this.y = y;
+    this.radius = 10;
     this.dy = dy;
     this.color = color;
   }
@@ -20,7 +22,7 @@ export class Projectile {
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = this.color;
     ctx.beginPath();
-    ctx.arc(this.x, this.y + this.height, 10, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y + this.height, this.radius, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
   }

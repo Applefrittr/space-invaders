@@ -1,7 +1,7 @@
 import { Defender } from "./defender";
-import { createFleet } from "./utils/createFleet";
 import { projectileList } from "./projectileArray";
 import { fleet } from "./invaderFleet";
+import { detectCollision } from "./utils/detectCollision";
 
 export function gameLoop() {
   let level = 1;
@@ -21,8 +21,7 @@ export function gameLoop() {
     player.keyUp(key);
   });
 
-  //const invaders = createFleet(10, 5, 1, 60);
-  fleet.createFleet(10, 5, 1, 60);
+  fleet.createFleet(87, 5, 1, 60);
 
   const animate = () => {
     requestAnimationFrame(animate);
@@ -34,7 +33,13 @@ export function gameLoop() {
     });
 
     projectileList.arr.forEach((projectile) => {
-      console.log(projectileList.arr.length);
+      fleet.arr.forEach((invader) => {
+        const hit = detectCollision(projectile, invader);
+        if (hit) {
+          projectileList.remove(projectile);
+          fleet.destroyShip(invader);
+        }
+      });
       projectile.update(ctx);
     });
   };
