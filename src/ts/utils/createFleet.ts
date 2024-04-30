@@ -1,4 +1,4 @@
-import { Invader } from "./invader";
+import { Invader } from "../invader";
 
 /** Create fleet formation of Invaders starting from the top right of the screen.  Count, velX , and VelY will be dynamically set by diffculty level.  Spacing is the
  * gaps between each Invader

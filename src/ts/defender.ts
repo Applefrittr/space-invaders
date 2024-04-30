@@ -1,3 +1,6 @@
+import { Projectile } from "./projectile";
+import { projectileList } from "./projectileArray";
+
 export class Defender {
   width: number;
   height: number;
@@ -33,7 +36,7 @@ export class Defender {
         this.activeKey.a = true;
         break;
       case " ":
-        this.activeKey.space = true;
+        this.fire();
         break;
       default:
         return;
@@ -48,21 +51,28 @@ export class Defender {
       case "a":
         this.activeKey.a = false;
         break;
-      case " ":
-        this.activeKey.space = false;
-        break;
       default:
         return;
     }
   }
 
+  fire() {
+    console.log("FIRE!");
+    const bullet = new Projectile(
+      this.x + this.width / 2,
+      this.y,
+      10,
+      "yellow"
+    );
+    projectileList.add(bullet);
+  }
+
   update(ctx: CanvasRenderingContext2D) {
-    console.log("update");
+    // console.log("update");
     this.draw(ctx);
-    if (!this.activeKey.a && !this.activeKey.d && !this.activeKey.space) return;
+    if (!this.activeKey.a && !this.activeKey.d) return;
     if (this.activeKey.a && this.x >= 0) this.x -= this.dx;
     if (this.activeKey.d && this.x + this.width <= window.innerWidth)
       this.x += this.dx;
-    if (this.activeKey.space) console.log("space");
   }
 }
