@@ -1,7 +1,7 @@
 import { Invader } from "../classes/invader";
 
 export const invaderFleet = () => {
-  const arr: Invader[] = [];
+  let arr: Invader[] = [];
 
   /** Create fleet formation of Invaders starting from the top right of the screen.  Count, velX , and VelY will be dynamically set by diffculty level.  Spacing is the
    * gaps between each Invader
@@ -35,16 +35,22 @@ export const invaderFleet = () => {
   };
 
   const destroyShip = (invader: Invader) => {
+    invader.destroyed();
     const index = arr.indexOf(invader);
     if (index > -1) {
       arr.splice(index, 1);
     }
   };
 
+  const reset = () => {
+    arr.length = 0;
+  };
+
   return {
     arr,
     createFleet,
     destroyShip,
+    reset,
   };
 };
 

@@ -27,7 +27,7 @@ export class Defender {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-  keyDown(key: string) {
+  keyDown(key: string, repeat: boolean) {
     switch (key) {
       case "d":
         this.activeKey.d = true;
@@ -36,6 +36,7 @@ export class Defender {
         this.activeKey.a = true;
         break;
       case " ":
+        if (repeat) return;
         this.fire();
         break;
       default:
@@ -43,7 +44,7 @@ export class Defender {
     }
   }
 
-  keyUp(key: string) {
+  keyUp(key: string, repeat: boolean) {
     switch (key) {
       case "d":
         this.activeKey.d = false;

@@ -14,14 +14,20 @@ export function gameLoop() {
   const ctx = space.getContext("2d");
 
   const player = new Defender();
-  window.addEventListener("keydown", ({ key }) => {
-    player.keyDown(key);
+  window.addEventListener("keydown", ({ key, repeat }) => {
+    player.keyDown(key, repeat);
   });
-  window.addEventListener("keyup", ({ key }) => {
-    player.keyUp(key);
+  window.addEventListener("keyup", ({ key, repeat }) => {
+    player.keyUp(key, repeat);
   });
 
-  fleet.createFleet(87, 5, 1, 60);
+  fleet.reset();
+  projectileList.reset();
+
+  fleet.createFleet(40, 5, 1, 60);
+  fleet.arr.forEach((invader) => {
+    invader.fire();
+  });
 
   const animate = () => {
     requestAnimationFrame(animate);
@@ -35,10 +41,11 @@ export function gameLoop() {
     projectileList.arr.forEach((projectile) => {
       fleet.arr.forEach((invader) => {
         const hit = detectCollision(projectile, invader);
-        if (hit) {
+        if (hit && projectile.dy > 0) {
           projectileList.remove(projectile);
           fleet.destroyShip(invader);
-        }
+        } else if (hit && projectile.dy < 0) projectileList.remove(projectile);
+        else return;
       });
       projectile.update(ctx);
     });

@@ -1,7 +1,7 @@
 import { Projectile } from "../classes/projectile";
 
 export const projectileArray = () => {
-  const arr: Projectile[] = [];
+  let arr: Projectile[] = [];
 
   const add = (projectile: Projectile) => {
     arr.push(projectile);
@@ -14,10 +14,15 @@ export const projectileArray = () => {
     }
   };
 
+  const reset = () => {
+    arr.length = 0;
+  };
+
   return {
     arr,
     add,
     remove,
+    reset,
   };
 };
 
