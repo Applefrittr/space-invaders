@@ -35,7 +35,6 @@ export const invaderFleet = () => {
   };
 
   const destroyShip = (invader: Invader) => {
-    invader.destroyed();
     const index = arr.indexOf(invader);
     if (index > -1) {
       arr.splice(index, 1);
@@ -43,9 +42,6 @@ export const invaderFleet = () => {
   };
 
   const reset = () => {
-    arr.forEach((invader) => {
-      invader.destroyed();
-    });
     arr.length = 0;
   };
 

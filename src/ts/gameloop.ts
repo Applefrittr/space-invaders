@@ -1,4 +1,5 @@
 import { Defender } from "./classes/defender";
+import { Projectile } from "./classes/projectile";
 import { projectileList } from "./objects/projectiles";
 import { fleet } from "./objects/invaderFleet";
 import { detectCollision } from "./utils/detectCollision";
@@ -13,10 +14,7 @@ export function gameLoop(
   fleet.reset();
   projectileList.reset();
 
-  fleet.createFleet(5, 5, 1, 60);
-  fleet.arr.forEach((invader) => {
-    invader.fire();
-  });
+  fleet.createFleet(20, 5, 1, 60);
 
   let requestID: number;
 
@@ -68,5 +66,4 @@ export function gameLoop(
   };
 
   start();
-  // stop();
 }

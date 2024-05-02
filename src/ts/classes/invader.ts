@@ -8,12 +8,12 @@ export class Invader {
   y: number;
   dx: number;
   dy: number;
+  frame: number;
   fireInterval: number;
   bounds: {
     rightX: number;
     leftX: number;
   };
-  fireTimeout: ReturnType<typeof setTimeout>;
 
   constructor(posX: number, posY: number, velX: number, velY: number) {
     this.width = 50;
@@ -22,12 +22,12 @@ export class Invader {
     this.y = posY;
     this.dx = velX;
     this.dy = velY;
-    this.fireInterval = Math.random() * 5000 + 5000;
+    this.frame = 0;
+    this.fireInterval = (Math.random() * 7 + 1) * 60;
     this.bounds = {
       rightX: innerWidth,
       leftX: 0,
     };
-    this.fireTimeout = null;
   }
 
   /**Set X axis bounds of this Invader relative to it's position in fleet, critical to keep Invaders moving in formation
@@ -70,28 +70,26 @@ export class Invader {
   update(ctx: CanvasRenderingContext2D) {
     this.draw(ctx);
     this.x -= this.dx;
+    this.frame++;
     if (this.x <= this.bounds.leftX) {
       this.dx = -this.dx;
     }
     if (this.x >= this.bounds.rightX) {
       this.dx = -this.dx;
     }
+    if (this.frame >= this.fireInterval) {
+      this.fire();
+    }
   }
 
   fire() {
-    this.fireTimeout = setTimeout(() => {
-      const bullet = new Projectile(
-        this.x + this.width / 2,
-        this.y + this.height + 15,
-        -10,
-        "orange"
-      );
-      projectileList.add(bullet);
-      this.fire();
-    }, this.fireInterval);
-  }
-
-  destroyed() {
-    clearTimeout(this.fireTimeout);
+    const bullet = new Projectile(
+      this.x + this.width / 2,
+      this.y + this.height + 15,
+      -10,
+      "orange"
+    );
+    projectileList.add(bullet);
+    this.frame = 0;
   }
 }
