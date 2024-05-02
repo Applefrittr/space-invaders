@@ -8,6 +8,8 @@ export class Defender {
   y: number;
   dx: number;
   activeKey: { a: boolean; d: boolean; space: boolean };
+  hit: boolean;
+  hps: number;
 
   constructor() {
     this.width = 50;
@@ -20,6 +22,8 @@ export class Defender {
       d: false,
       space: false,
     };
+    this.hit = false;
+    this.hps = 3;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -59,7 +63,12 @@ export class Defender {
 
   fire() {
     console.log("FIRE!");
-    const bullet = new Projectile(this.x + this.width / 2, this.y, 10, "green");
+    const bullet = new Projectile(
+      this.x + this.width / 2,
+      this.y - 20,
+      10,
+      "green"
+    );
     projectileList.add(bullet);
   }
 

@@ -43,6 +43,9 @@ export const invaderFleet = () => {
   };
 
   const reset = () => {
+    arr.forEach((invader) => {
+      invader.destroyed();
+    });
     arr.length = 0;
   };
 
