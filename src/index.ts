@@ -1,6 +1,7 @@
 import "./style.css";
 import { gameLoop } from "./ts/gameloop";
 import { Defender } from "./ts/classes/defender";
+import { levelArray } from "./ts/objects/levels";
 
 const space = document.querySelector("#space") as HTMLCanvasElement;
 
@@ -17,4 +18,4 @@ window.addEventListener("keyup", ({ key, repeat }) => {
   player.keyUp(key, repeat);
 });
 
-gameLoop(player, space, ctx);
+gameLoop(player, space, ctx, levelArray, 0);

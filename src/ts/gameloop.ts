@@ -3,33 +3,38 @@ import { Projectile } from "./classes/projectile";
 import { projectileList } from "./objects/projectiles";
 import { fleet } from "./objects/invaderFleet";
 import { detectCollision } from "./utils/detectCollision";
+import { Level } from "./objects/levels";
 
 export function gameLoop(
   player: Defender,
   space: HTMLCanvasElement,
-  ctx: CanvasRenderingContext2D
+  ctx: CanvasRenderingContext2D,
+  levelArray: Level[],
+  level: number
 ) {
-  let level = 1;
+  console.log(level, level++);
+  const currLevel = levelArray[level];
 
   fleet.reset();
   projectileList.reset();
 
-  fleet.createFleet(20, 5, 1, 60);
+  fleet.createFleet(currLevel.shipCount, currLevel.shipVelocity, 1, 60);
 
   let requestID: number;
 
   const animate = () => {
+    requestID = requestAnimationFrame(animate);
     if (player.hit) {
+      stop();
+      player.hit = false;
       setTimeout(() => {
-        stop();
-        player.hit = false;
-        gameLoop(player, space, ctx);
-      }, 0);
+        gameLoop(player, space, ctx, levelArray, 0);
+      }, 2000);
     } else if (fleet.arr.length === 0) {
+      stop();
       setTimeout(() => {
-        stop();
-        gameLoop(player, space, ctx);
-      }, 0);
+        gameLoop(player, space, ctx, levelArray, level++);
+      }, 2000);
     }
     ctx.clearRect(0, 0, space.width, space.height);
     player.update(ctx);
@@ -53,7 +58,6 @@ export function gameLoop(
       }
       projectile.update(ctx);
     });
-    requestID = requestAnimationFrame(animate);
   };
 
   const start = () => {
