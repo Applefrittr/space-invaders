@@ -28,9 +28,11 @@ export class Projectile {
     ctx.fill();
   }
 
-  update(ctx: CanvasRenderingContext2D) {
-    this.draw(ctx);
-    this.y -= this.dy;
-    if (this.y <= 0 || this.y >= innerHeight) projectileList.remove(this);
+  update(ctx: CanvasRenderingContext2D | null) {
+    if (ctx) {
+      this.draw(ctx);
+      this.y -= this.dy;
+      if (this.y <= 0 || this.y >= innerHeight) projectileList.remove(this);
+    }
   }
 }

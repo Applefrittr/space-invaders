@@ -67,18 +67,20 @@ export class Invader {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-  update(ctx: CanvasRenderingContext2D) {
-    this.draw(ctx);
-    this.x -= this.dx;
-    this.frame++;
-    if (this.x <= this.bounds.leftX) {
-      this.dx = -this.dx;
-    }
-    if (this.x >= this.bounds.rightX) {
-      this.dx = -this.dx;
-    }
-    if (this.frame >= this.fireInterval) {
-      this.fire();
+  update(ctx: CanvasRenderingContext2D | null) {
+    if (ctx) {
+      this.draw(ctx);
+      this.x -= this.dx;
+      this.frame++;
+      if (this.x <= this.bounds.leftX) {
+        this.dx = -this.dx;
+      }
+      if (this.x >= this.bounds.rightX) {
+        this.dx = -this.dx;
+      }
+      if (this.frame >= this.fireInterval) {
+        this.fire();
+      }
     }
   }
 

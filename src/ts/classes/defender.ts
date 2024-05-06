@@ -48,7 +48,7 @@ export class Defender {
     }
   }
 
-  keyUp(key: string, repeat: boolean) {
+  keyUp(key: string) {
     switch (key) {
       case "d":
         this.activeKey.d = false;

@@ -1,7 +1,7 @@
 import { Invader } from "../classes/invader";
 
 export const invaderFleet = () => {
-  let arr: Invader[] = [];
+  const arr: Invader[] = [];
 
   /** Create fleet formation of Invaders starting from the top right of the screen.  Count, velX , and VelY will be dynamically set by diffculty level.  Spacing is the
    * gaps between each Invader
@@ -20,11 +20,11 @@ export const invaderFleet = () => {
     const maxColumns = 20;
     const maxRow = Math.ceil(count / maxColumns);
     let posX = window.innerWidth - 50;
-    let posY = 60;
+    const posY = 60;
     let currRow = 1;
 
     for (let i = 1; i <= count; i++) {
-      let invader = new Invader(posX, posY * currRow, velX, velY);
+      const invader = new Invader(posX, posY * currRow, velX, velY);
       invader.setBounds(i, count, spacing, maxColumns, currRow, maxRow);
       arr.push(invader);
       if (Math.floor(i / maxColumns) === currRow) {
