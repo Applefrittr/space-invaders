@@ -1,0 +1,18 @@
+.gameview {
+  position: relative;
+  height: inherit;
+  width: inherit;
+}
+
+.game-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+}
+
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}

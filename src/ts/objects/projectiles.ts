@@ -1,7 +1,7 @@
 import { Projectile } from "../classes/projectile";
 
 export const projectileArray = () => {
-  let arr: Projectile[] = [];
+  const arr: Projectile[] = [];
 
   const add = (projectile: Projectile) => {
     arr.push(projectile);

@@ -1,0 +1,13 @@
+@import url("./Canvas.css");
+@import url("./Pause.css");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.App {
+  width: 100svw;
+  height: 100svh;
+  background-color: palegreen;
+}

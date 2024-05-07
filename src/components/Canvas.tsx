@@ -1,25 +1,35 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Game } from "../ts/game";
-import { levelArray } from "../ts/objects/levels";
 import { Defender } from "../ts/classes/defender";
+import Pause from "./Pause";
 
-function Canvas() {
+interface propObjects {
+  defender: Defender;
+  game: Game;
+}
+
+function Canvas({ defender, game }: propObjects) {
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
   interface Event {
     key: string;
     repeat: boolean;
   }
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const player = new Defender();
-  const game = new Game(player, levelArray, 0);
-
   const handleKeyDown = (e: Event) => {
-    player.keyDown(e.key, e.repeat);
+    defender.keyDown(e.key, e.repeat);
   };
 
   const handleKeyUp = (e: Event) => {
-    player.keyUp(e.key);
+    defender.keyUp(e.key);
+  };
+
+  const togglePause = () => {
+    game.togglePause();
+    setIsPaused((prev) => !prev);
+    canvasRef.current?.focus();
   };
 
   useEffect(() => {
@@ -38,14 +48,25 @@ function Canvas() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      tabIndex={0}
-      width={innerWidth}
-      height={innerHeight}
-      onKeyUp={handleKeyUp}
-      onKeyDown={handleKeyDown}
-    ></canvas>
+    <section className="gameview">
+      <canvas
+        ref={canvasRef}
+        tabIndex={0}
+        width={innerWidth}
+        height={innerHeight}
+        onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDown}
+      ></canvas>
+      <div className="game-hud">
+        <div className="hud-top">
+          <div>Score: 10000</div>
+          <button className="pause-btn" onClick={togglePause}>
+            Pause
+          </button>
+        </div>
+      </div>
+      {isPaused && <Pause resume={togglePause}></Pause>}
+    </section>
   );
 }
 
