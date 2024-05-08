@@ -4,10 +4,14 @@ interface propFunctions {
 
 function Menu({ startGame }: propFunctions) {
   return (
-    <>
-      <h1>Space Invaders!</h1>
-      <button onClick={startGame}>Start</button>
-    </>
+    <section className="Menu">
+      <h1>Space Invaders</h1>
+      <button onClick={startGame} className="btns">
+        <div className="btn-contents">
+          <span>Start</span>
+        </div>
+      </button>
+    </section>
   );
 }
 

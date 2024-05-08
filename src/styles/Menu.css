@@ -1,0 +1,14 @@
+.Menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  gap: 0.5rem;
+}
+
+.Menu > h1 {
+  font-family: Supercharge;
+  font-size: 3rem;
+}

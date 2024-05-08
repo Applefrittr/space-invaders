@@ -6,9 +6,10 @@ import Pause from "./Pause";
 interface propObjects {
   defender: Defender;
   game: Game;
+  bgPause: () => void;
 }
 
-function Canvas({ defender, game }: propObjects) {
+function Canvas({ defender, game, bgPause }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,6 +29,7 @@ function Canvas({ defender, game }: propObjects) {
 
   const togglePause = () => {
     game.togglePause();
+    bgPause();
     setIsPaused((prev) => !prev);
     canvasRef.current?.focus();
   };

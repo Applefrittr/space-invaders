@@ -1,13 +1,69 @@
 @import url("./Canvas.css");
 @import url("./Pause.css");
+@import url("./Menu.css");
 
 * {
   box-sizing: border-box;
   margin: 0;
 }
 
+@font-face {
+  font-family: Supercharge;
+  src: url("../assets/Supercharge-JRgPo.otf");
+}
+
 .App {
   width: 100svw;
   height: 100svh;
-  background-color: palegreen;
+  color: white;
+  position: relative;
+}
+
+.bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  z-index: -1;
+}
+
+.btns {
+  font-family: Supercharge;
+  text-decoration: none;
+  width: 200px;
+  height: 50px;
+  background-color: black;
+  clip-path: polygon(80% 0%, 100% 100%, 0% 100%, 20% 0%, 0 0);
+  position: relative;
+  background-color: white;
+  border: none;
+  padding-top: 50px;
+}
+
+.btn-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background-color: black;
+  color: white;
+  font-size: 1.1rem;
+  gap: 0.25rem;
+  clip-path: polygon(80% 0%, 99% 99%, 1% 99%, 20% 0%, 0 0);
+  z-index: 5;
+}
+
+.btn-contents:hover {
+  background-color: white;
+  cursor: pointer;
+  color: black;
+}
+
+.btn-contents > span {
+  display: flex;
+  align-items: center;
 }
