@@ -59,8 +59,10 @@ export class Game {
             fleet.arr.forEach((invader) => {
               const hit = detectCollision(projectile, invader);
               if (hit && projectile.dy > 0) {
+                this.player.score += invader.scoreVal;
                 projectileList.remove(projectile);
                 fleet.destroyShip(invader);
+                console.log(this.player.score);
               } else if (hit && projectile.dy < 0)
                 projectileList.remove(projectile);
               else return;
@@ -77,6 +79,10 @@ export class Game {
 
     animate();
   }
+
+  // updateScore() {
+  //   return this.player.score
+  // }
 
   stop() {
     if (this.ctx) {

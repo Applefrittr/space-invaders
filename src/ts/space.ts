@@ -22,7 +22,7 @@ function space() {
             stars.remove(star);
             setTimeout(() => {
               stars.add();
-            }, 500);
+            }, 250);
           }
         });
       }

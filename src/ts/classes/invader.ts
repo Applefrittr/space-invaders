@@ -2,28 +2,25 @@ import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
 
 export class Invader {
-  width: number;
-  height: number;
+  width: number = 50;
+  height: number = 50;
   x: number;
   y: number;
   dx: number;
   dy: number;
-  frame: number;
-  fireInterval: number;
+  frame: number = 0;
+  fireInterval: number = (Math.random() * 7 + 1) * 60;
   bounds: {
     rightX: number;
     leftX: number;
   };
+  scoreVal: number = 100;
 
   constructor(posX: number, posY: number, velX: number, velY: number) {
-    this.width = 50;
-    this.height = 50;
     this.x = posX;
     this.y = posY;
     this.dx = velX;
     this.dy = velY;
-    this.frame = 0;
-    this.fireInterval = (Math.random() * 7 + 1) * 60;
     this.bounds = {
       rightX: innerWidth,
       leftX: 0,

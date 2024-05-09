@@ -2,28 +2,22 @@ import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
 
 export class Defender {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-  dx: number;
+  width: number = 50;
+  height: number = 50;
+  x: number = window.innerWidth / 2 - this.width / 2;
+  y: number = window.innerHeight - this.height - 20;
+  dx: number = 10;
   activeKey: { a: boolean; d: boolean; space: boolean };
-  hit: boolean;
-  hps: number;
+  hit: boolean = false;
+  hps: number = 3;
+  score: number = 0;
 
   constructor() {
-    this.width = 50;
-    this.height = 50;
-    this.x = window.innerWidth / 2 - this.width / 2;
-    this.y = window.innerHeight - this.height - 20;
-    this.dx = 10;
     this.activeKey = {
       a: false,
       d: false,
       space: false,
     };
-    this.hit = false;
-    this.hps = 3;
   }
 
   draw(ctx: CanvasRenderingContext2D) {

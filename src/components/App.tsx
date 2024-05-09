@@ -10,6 +10,7 @@ import { spaceCanvas } from "../ts/space";
 function App() {
   const [defender, setDefender] = useState<Defender>();
   const [game, setGame] = useState<Game>();
+  const [score, setScore] = useState<number>(0);
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const startGame = () => {
@@ -17,6 +18,7 @@ function App() {
     const newGame = new Game(player, levelArray, 0);
     setDefender(player);
     setGame(newGame);
+    setScore(player.score);
   };
 
   const bgPause = () => {
@@ -37,7 +39,12 @@ function App() {
     <section className="App">
       {!defender && !game && <Menu startGame={startGame}></Menu>}
       {defender && game && (
-        <Canvas defender={defender} game={game} bgPause={bgPause}></Canvas>
+        <Canvas
+          defender={defender}
+          game={game}
+          bgPause={bgPause}
+          score={score}
+        ></Canvas>
       )}
       <canvas
         ref={bgCanvasRef}

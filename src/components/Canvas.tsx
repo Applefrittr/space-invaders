@@ -7,10 +7,13 @@ interface propObjects {
   defender: Defender;
   game: Game;
   bgPause: () => void;
+  score: number;
 }
 
 function Canvas({ defender, game, bgPause }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
+
+  const [score, setScore] = useState<number>(defender.score);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -35,6 +38,7 @@ function Canvas({ defender, game, bgPause }: propObjects) {
   };
 
   useEffect(() => {
+    let intervalID: number;
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
@@ -42,12 +46,20 @@ function Canvas({ defender, game, bgPause }: propObjects) {
 
       game.setCanvas(canvas, ctx);
       game.start();
+      intervalID = setInterval(() => {
+        setScore(defender.score);
+      }, 250);
     }
     return () => {
       game.stop();
+      clearInterval(intervalID);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // useEffect(() => {
+  //   setScore(defender.score);
+  // }, [defender.score]);
 
   return (
     <section className="gameview">
@@ -61,7 +73,7 @@ function Canvas({ defender, game, bgPause }: propObjects) {
       ></canvas>
       <div className="game-hud">
         <div className="hud-top">
-          <div>Score: 10000</div>
+          <div>Score: {score}</div>
           <button className="pause-btn" onClick={togglePause}>
             Pause
           </button>

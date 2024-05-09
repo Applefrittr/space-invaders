@@ -15,7 +15,11 @@ export const starArray = () => {
   };
 
   const add = () => {
-    const star = new Star(Math.random() * innerWidth, -5, Math.random() * 5);
+    const star = new Star(
+      Math.random() * innerWidth,
+      -5,
+      Math.random() * 4 + 0.5
+    );
     arr.push(star);
   };
 
