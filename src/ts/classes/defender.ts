@@ -1,5 +1,6 @@
 import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
+import { flyOutGen } from "../utils/defenderAnimations";
 
 export class Defender {
   width: number = 50;
@@ -11,6 +12,8 @@ export class Defender {
   hit: boolean = false;
   hps: number = 3;
   score: number = 0;
+  lvlWon: boolean = false;
+  flyOut = flyOutGen();
 
   constructor() {
     this.activeKey = {
@@ -66,9 +69,33 @@ export class Defender {
     projectileList.add(bullet);
   }
 
+  reset() {
+    this.x = window.innerWidth / 2 - this.width / 2;
+    this.y = window.innerHeight - this.height - 20;
+  }
+
+  animateFlyOut() {
+    if (this.flyOut.next().done) {
+      console.log({ y: this.y });
+      this.y += -20;
+    } else {
+      const dy: number = this.flyOut.next().value;
+      console.log(this.y);
+      this.y += dy;
+    }
+  }
+
   update(ctx: CanvasRenderingContext2D) {
     // console.log("update");
     this.draw(ctx);
+    if (this.lvlWon) {
+      this.animateFlyOut();
+      if (this.y + this.height <= 0) {
+        console.log("out of bounds");
+        this.flyOut = flyOutGen();
+      }
+      return;
+    }
     if (!this.activeKey.a && !this.activeKey.d) return;
     if (this.activeKey.a && this.x >= 0) this.x -= this.dx;
     if (this.activeKey.d && this.x + this.width <= window.innerWidth)

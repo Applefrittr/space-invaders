@@ -17,6 +17,7 @@
   height: 100svh;
   color: white;
   position: relative;
+  overflow: hidden;
 }
 
 .bg-canvas {

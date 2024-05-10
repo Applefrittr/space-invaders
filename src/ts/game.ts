@@ -26,6 +26,7 @@ export class Game {
 
   start() {
     const currLevel = this.levelArray[this.level];
+    this.player.reset();
     fleet.reset();
     projectileList.reset();
     fleet.createFleet(currLevel.shipCount, currLevel.shipVelocity, 1, 60);
@@ -42,11 +43,17 @@ export class Game {
               this.start();
             }, 2000);
           } else if (fleet.arr.length === 0) {
-            this.stop();
-            setTimeout(() => {
-              this.level++;
-              this.start();
-            }, 2000);
+            if (this.player.y + this.player.height <= 0) {
+              this.player.lvlWon = false;
+              this.stop();
+              setTimeout(() => {
+                this.level++;
+                this.start();
+              }, 2000);
+              return;
+            }
+            this.player.lvlWon = true;
+            projectileList.reset();
           }
           this.ctx.clearRect(0, 0, innerWidth, innerHeight);
           this.player?.update(this.ctx);
