@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Game } from "../ts/game";
 import { Defender } from "../ts/classes/defender";
 import Pause from "./Pause";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface propObjects {
   defender: Defender;
@@ -12,9 +13,8 @@ interface propObjects {
 
 function Canvas({ defender, game, bgPause }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
-
   const [score, setScore] = useState<number>(defender.score);
-
+  const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   interface Event {
@@ -38,28 +38,30 @@ function Canvas({ defender, game, bgPause }: propObjects) {
   };
 
   useEffect(() => {
-    let intervalID: number;
+    let updateStateFrameID: number;
+
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       canvas.focus();
 
-      game.setCanvas(canvas, ctx);
-      game.start();
-      intervalID = setInterval(() => {
+      game.setCanvasCtx(ctx);
+      game.gameLoop();
+
+      const updateStates = () => {
+        updateStateFrameID = requestAnimationFrame(updateStates);
         setScore(defender.score);
-      }, 250);
+        setDisplayLvlBanner(game.startAnimationsRunning);
+      };
+
+      updateStates();
     }
     return () => {
       game.stop();
-      clearInterval(intervalID);
+      cancelAnimationFrame(updateStateFrameID);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   setScore(defender.score);
-  // }, [defender.score]);
 
   return (
     <section className="gameview">
@@ -80,6 +82,19 @@ function Canvas({ defender, game, bgPause }: propObjects) {
         </div>
       </div>
       {isPaused && <Pause resume={togglePause}></Pause>}
+      <AnimatePresence>
+        {displayLvlBanner && (
+          <motion.section
+            className="lvl-banner"
+            initial={{ opacity: 0, x: -200 }}
+            transition={{ duration: 1 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 200 }}
+          >
+            <i>Stage {game.level + 1}</i>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

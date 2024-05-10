@@ -15,4 +15,21 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+  font-family: Supercharge;
+  font-size: 1.5rem;
+}
+
+.lvl-banner {
+  position: absolute;
+  top: 50%;
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.lvl-banner > i {
+  font-size: 2.5rem;
+  font-family: Supercharge;
 }

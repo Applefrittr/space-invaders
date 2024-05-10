@@ -14,6 +14,7 @@ export class Defender {
   score: number = 0;
   lvlWon: boolean = false;
   flyOut = flyOutGen();
+  animationLock: boolean = false;
 
   constructor() {
     this.activeKey = {
@@ -76,11 +77,9 @@ export class Defender {
 
   animateFlyOut() {
     if (this.flyOut.next().done) {
-      console.log({ y: this.y });
       this.y += -20;
     } else {
       const dy: number = this.flyOut.next().value;
-      console.log(this.y);
       this.y += dy;
     }
   }
@@ -88,10 +87,10 @@ export class Defender {
   update(ctx: CanvasRenderingContext2D) {
     // console.log("update");
     this.draw(ctx);
+    if (this.animationLock) return;
     if (this.lvlWon) {
       this.animateFlyOut();
       if (this.y + this.height <= 0) {
-        console.log("out of bounds");
         this.flyOut = flyOutGen();
       }
       return;

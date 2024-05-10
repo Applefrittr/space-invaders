@@ -15,6 +15,7 @@ export class Invader {
     leftX: number;
   };
   scoreVal: number = 100;
+  animationLock: boolean = true;
 
   constructor(posX: number, posY: number, velX: number, velY: number) {
     this.x = posX;
@@ -67,6 +68,7 @@ export class Invader {
   update(ctx: CanvasRenderingContext2D | null) {
     if (ctx) {
       this.draw(ctx);
+      if (this.animationLock) return;
       this.x -= this.dx;
       this.frame++;
       if (this.x <= this.bounds.leftX) {

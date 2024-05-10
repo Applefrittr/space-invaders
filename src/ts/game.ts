@@ -8,10 +8,10 @@ export class Game {
   player: Defender;
   levelArray: Level[];
   level: number;
-  canvas: HTMLCanvasElement | null = null;
   ctx: CanvasRenderingContext2D | null = null;
   isPaused: boolean = false;
   requestID: number = 0;
+  startAnimationsRunning: boolean = false;
 
   constructor(player: Defender, levelArray: Level[], level: number) {
     this.player = player;
@@ -19,18 +19,21 @@ export class Game {
     this.level = level;
   }
 
-  setCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D | null) {
-    this.canvas = canvas;
+  setCanvasCtx(ctx: CanvasRenderingContext2D | null) {
     this.ctx = ctx;
   }
 
-  start() {
+  levelStart() {
     const currLevel = this.levelArray[this.level];
     this.player.reset();
     fleet.reset();
     projectileList.reset();
     fleet.createFleet(currLevel.shipCount, currLevel.shipVelocity, 1, 60);
+    this.startAnimationsRunning = true;
+    this.player.animationLock = true;
+  }
 
+  gameLoop() {
     const animate = () => {
       if (this.ctx) {
         this.requestID = requestAnimationFrame(animate);
@@ -40,7 +43,8 @@ export class Game {
             this.player.hit = false;
             setTimeout(() => {
               this.level = 0;
-              this.start();
+              this.player.score = 0;
+              this.gameLoop();
             }, 2000);
           } else if (fleet.arr.length === 0) {
             if (this.player.y + this.player.height <= 0) {
@@ -48,7 +52,7 @@ export class Game {
               this.stop();
               setTimeout(() => {
                 this.level++;
-                this.start();
+                this.gameLoop();
               }, 2000);
               return;
             }
@@ -84,12 +88,17 @@ export class Game {
       }
     };
 
-    animate();
-  }
+    this.levelStart();
 
-  // updateScore() {
-  //   return this.player.score
-  // }
+    animate();
+    setTimeout(() => {
+      this.startAnimationsRunning = false;
+      this.player.animationLock = false;
+      fleet.arr.forEach((invader) => {
+        invader.animationLock = false;
+      });
+    }, 3000);
+  }
 
   stop() {
     if (this.ctx) {
