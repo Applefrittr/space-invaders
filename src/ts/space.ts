@@ -20,9 +20,13 @@ function space() {
       const msNow = performance.now();
       const msPassed = msNow - msPrev;
 
+      //console.log(msPassed);
+
       if (msPassed < msPerFrame) return;
 
-      msPrev = msNow;
+      const msExcess = msPassed % msPerFrame;
+      msPrev = msNow - msExcess;
+
       if (!isPaused && ctx) {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 

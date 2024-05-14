@@ -52,7 +52,9 @@ export class Game {
 
         if (msPassed < this.msPerFrame) return;
 
-        this.msPrev = msNow;
+        const msExcess = msPassed % this.msPerFrame;
+        this.msPrev = msNow - msExcess;
+
         if (!this.isPaused) {
           if (this.player && this.player.hit) {
             this.player.hit = false;
