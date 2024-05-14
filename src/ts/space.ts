@@ -1,8 +1,11 @@
 import { stars } from "./objects/stars";
 
 function space() {
-  let isPaused = false;
+  let isPaused: boolean = false;
   let ctx: CanvasRenderingContext2D | null;
+  let msPrev: number = performance.now();
+  const fps: number = 60;
+  const msPerFrame: number = 1000 / fps;
 
   const setContext = (context: CanvasRenderingContext2D | null) => {
     ctx = context;
@@ -13,6 +16,13 @@ function space() {
 
     const animate = () => {
       requestAnimationFrame(animate);
+
+      const msNow = performance.now();
+      const msPassed = msNow - msPrev;
+
+      if (msPassed < msPerFrame) return;
+
+      msPrev = msNow;
       if (!isPaused && ctx) {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 

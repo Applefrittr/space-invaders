@@ -12,6 +12,9 @@ export class Game {
   isPaused: boolean = false;
   requestID: number = 0;
   startAnimationsRunning: boolean = false;
+  msPrev: number = performance.now();
+  fps: number = 60;
+  msPerFrame: number = 1000 / this.fps;
 
   constructor(player: Defender, levelArray: Level[], level: number) {
     this.player = player;
@@ -37,6 +40,13 @@ export class Game {
     const animate = () => {
       if (this.ctx) {
         this.requestID = requestAnimationFrame(animate);
+
+        const msNow = performance.now();
+        const msPassed = msNow - this.msPrev;
+
+        if (msPassed < this.msPerFrame) return;
+
+        this.msPrev = msNow;
         if (!this.isPaused) {
           if (this.player && this.player.hit) {
             this.stop();
