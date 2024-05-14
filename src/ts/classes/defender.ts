@@ -38,7 +38,7 @@ export class Defender {
         this.activeKey.a = true;
         break;
       case " ":
-        if (repeat) return;
+        if (repeat || this.animationLock) return;
         this.fire();
         break;
       default:
