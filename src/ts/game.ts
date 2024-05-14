@@ -55,9 +55,10 @@ export class Game {
         this.msPrev = msNow;
         if (!this.isPaused) {
           if (this.player && this.player.hit) {
-            this.stop();
             this.player.hit = false;
             setTimeout(() => {
+              this.player.animationLock = false;
+              this.stop();
               this.level = 0;
               this.player.score = 0;
               this.gameLoop();
@@ -89,7 +90,6 @@ export class Game {
                 this.player.score += invader.scoreVal;
                 projectileList.remove(projectile);
                 fleet.destroyShip(invader);
-                console.log(this.player.score);
               } else if (hit && projectile.dy < 0)
                 projectileList.remove(projectile);
               else return;
@@ -97,6 +97,7 @@ export class Game {
             if (this.player && detectCollision(projectile, this.player)) {
               projectileList.remove(projectile);
               this.player.hit = true;
+              this.player.animationLock = true;
             }
             projectile.update(this.ctx);
           });

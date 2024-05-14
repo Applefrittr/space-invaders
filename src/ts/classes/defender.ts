@@ -60,7 +60,6 @@ export class Defender {
   }
 
   fire() {
-    console.log("FIRE!");
     const bullet = new Projectile(
       this.x + this.width / 2,
       this.y - 20,

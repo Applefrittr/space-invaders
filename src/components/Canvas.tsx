@@ -76,8 +76,10 @@ function Canvas({ defender, game, bgPause }: propObjects) {
       <div className="game-hud">
         <div className="hud-top">
           <div>Score: {score}</div>
-          <button className="pause-btn" onClick={togglePause}>
-            Pause
+          <button onClick={togglePause} className="btns btns-small">
+            <div className="btn-contents">
+              <span>Pause</span>
+            </div>
           </button>
         </div>
       </div>
