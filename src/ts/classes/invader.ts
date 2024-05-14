@@ -8,6 +8,7 @@ export class Invader {
   y: number;
   dx: number;
   dy: number;
+  dyProj: number;
   frame: number = 0;
   fireInterval: number = (Math.random() * 7 + 1) * 60;
   bounds: {
@@ -17,11 +18,18 @@ export class Invader {
   scoreVal: number = 100;
   animationLock: boolean = true;
 
-  constructor(posX: number, posY: number, velX: number, velY: number) {
+  constructor(
+    posX: number,
+    posY: number,
+    velX: number,
+    velY: number,
+    velProj: number
+  ) {
     this.x = posX;
     this.y = posY;
     this.dx = velX;
     this.dy = velY;
+    this.dyProj = velProj;
     this.bounds = {
       rightX: innerWidth,
       leftX: 0,
@@ -87,7 +95,7 @@ export class Invader {
     const bullet = new Projectile(
       this.x + this.width / 2,
       this.y + this.height + 15,
-      -10,
+      this.dyProj,
       "orange"
     );
     projectileList.add(bullet);

@@ -12,7 +12,7 @@ function space() {
   };
 
   const start = () => {
-    stars.createStars(10);
+    stars.createStars(20);
 
     const animate = () => {
       requestAnimationFrame(animate);

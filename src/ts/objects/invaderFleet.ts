@@ -15,7 +15,8 @@ export const invaderFleet = () => {
     count: number,
     velX: number,
     velY: number,
-    spacing: number
+    spacing: number,
+    velProj: number
   ) => {
     const maxColumns = 20;
     const maxRow = Math.ceil(count / maxColumns);
@@ -24,7 +25,7 @@ export const invaderFleet = () => {
     let currRow = 1;
 
     for (let i = 1; i <= count; i++) {
-      const invader = new Invader(posX, posY * currRow, velX, velY);
+      const invader = new Invader(posX, posY * currRow, velX, velY, velProj);
       invader.setBounds(i, count, spacing, maxColumns, currRow, maxRow);
       arr.push(invader);
       if (Math.floor(i / maxColumns) === currRow) {

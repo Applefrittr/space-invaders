@@ -31,7 +31,13 @@ export class Game {
     this.player.reset();
     fleet.reset();
     projectileList.reset();
-    fleet.createFleet(currLevel.shipCount, currLevel.shipVelocity, 1, 60);
+    fleet.createFleet(
+      currLevel.shipCount,
+      currLevel.shipVelocity,
+      1,
+      60,
+      currLevel.projVelocity
+    );
     this.startAnimationsRunning = true;
     this.player.animationLock = true;
   }
