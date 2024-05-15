@@ -108,7 +108,8 @@ export class Game {
         });
 
         explosionList.arr.forEach((explosion) => {
-          if (explosion.frame >= 20) explosionList.remove(explosion);
+          if (explosion.frame >= explosion.maxFrame)
+            explosionList.remove(explosion);
           explosion.update(this.ctx);
         });
       }

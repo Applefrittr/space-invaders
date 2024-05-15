@@ -11,6 +11,7 @@ export class Explosion {
   height: number = 75;
   sprite: CanvasImageSource = explosionSprite;
   frame: number = 1;
+  maxFrame: number = 30;
 
   constructor(posX: number, posY: number) {
     this.canvasX = posX;
@@ -35,7 +36,7 @@ export class Explosion {
   update(ctx: CanvasRenderingContext2D | null) {
     if (ctx) {
       this.draw(ctx);
-      if (this.frame % 2 === 0) this.sourceX += this.width;
+      if (this.frame % 3 === 0) this.sourceX += this.width;
       this.frame++;
       if (this.sourceX >= 750) this.sourceX = 0;
     }
