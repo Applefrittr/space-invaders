@@ -1,5 +1,7 @@
 import { Defender } from "./classes/defender";
+import { Explosion } from "./classes/explosion";
 import { projectileList } from "./objects/projectiles";
+import { explosionList } from "./objects/explosions";
 import { fleet } from "./objects/invaderFleet";
 import { detectCollision } from "./utils/detectCollision";
 import { Level } from "./objects/levels";
@@ -89,6 +91,8 @@ export class Game {
             fleet.arr.forEach((invader) => {
               const hit = detectCollision(projectile, invader);
               if (hit && projectile.dy > 0) {
+                const explosion = new Explosion(invader.x, invader.y);
+                explosionList.add(explosion);
                 this.player.score += invader.scoreVal;
                 projectileList.remove(projectile);
                 fleet.destroyShip(invader);
@@ -102,6 +106,11 @@ export class Game {
               this.player.animationLock = true;
             }
             projectile.update(this.ctx);
+          });
+
+          explosionList.arr.forEach((explosion) => {
+            if (explosion.frame >= 20) explosionList.remove(explosion);
+            explosion.update(this.ctx);
           });
         }
       }
