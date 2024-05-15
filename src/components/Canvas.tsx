@@ -14,7 +14,9 @@ interface propObjects {
 function Canvas({ defender, game, bgPause }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [score, setScore] = useState<number>(defender.score);
-  const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(false);
+  const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(
+    game.startAnimationsRunning
+  );
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   interface Event {
@@ -50,7 +52,7 @@ function Canvas({ defender, game, bgPause }: propObjects) {
 
       const updateStates = () => {
         updateStateFrameID = requestAnimationFrame(updateStates);
-        setScore(defender.score);
+        if (defender.score !== score) setScore(defender.score);
         setDisplayLvlBanner(game.startAnimationsRunning);
       };
 

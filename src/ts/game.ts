@@ -44,81 +44,82 @@ export class Game {
     this.player.animationLock = true;
   }
 
-  gameLoop() {
-    const animate = () => {
-      if (this.ctx) {
-        this.requestID = requestAnimationFrame(animate);
+  animate = () => {
+    if (this.ctx) {
+      this.requestID = requestAnimationFrame(this.animate);
 
-        const msNow = performance.now();
-        const msPassed = msNow - this.msPrev;
+      const msNow = performance.now();
+      const msPassed = msNow - this.msPrev;
 
-        if (msPassed < this.msPerFrame) return;
+      if (msPassed < this.msPerFrame) return;
 
-        const msExcess = msPassed % this.msPerFrame;
-        this.msPrev = msNow - msExcess;
+      const msExcess = msPassed % this.msPerFrame;
+      this.msPrev = msNow - msExcess;
 
-        if (!this.isPaused) {
-          if (this.player && this.player.hit) {
-            this.player.hit = false;
+      if (!this.isPaused) {
+        if (this.player && this.player.hit) {
+          this.player.hit = false;
+          setTimeout(() => {
+            this.player.animationLock = false;
+            this.stop();
+            this.level = 0;
+            this.player.score = 0;
+            this.gameLoop();
+          }, 2000);
+        } else if (fleet.arr.length === 0) {
+          if (this.player.y + this.player.height <= 0) {
+            this.player.lvlWon = false;
+            this.stop();
             setTimeout(() => {
-              this.player.animationLock = false;
-              this.stop();
-              this.level = 0;
-              this.player.score = 0;
+              this.level++;
               this.gameLoop();
             }, 2000);
-          } else if (fleet.arr.length === 0) {
-            if (this.player.y + this.player.height <= 0) {
-              this.player.lvlWon = false;
-              this.stop();
-              setTimeout(() => {
-                this.level++;
-                this.gameLoop();
-              }, 2000);
-              return;
-            }
-            this.player.lvlWon = true;
-            projectileList.reset();
+            return;
           }
-          this.ctx.clearRect(0, 0, innerWidth, innerHeight);
-          this.player?.update(this.ctx);
-
-          fleet.arr.forEach((invader) => {
-            invader.update(this.ctx);
-          });
-
-          projectileList.arr.forEach((projectile) => {
-            fleet.arr.forEach((invader) => {
-              const hit = detectCollision(projectile, invader);
-              if (hit && projectile.dy > 0) {
-                const explosion = new Explosion(invader.x, invader.y);
-                explosionList.add(explosion);
-                this.player.score += invader.scoreVal;
-                projectileList.remove(projectile);
-                fleet.destroyShip(invader);
-              } else if (hit && projectile.dy < 0)
-                projectileList.remove(projectile);
-              else return;
-            });
-            if (this.player && detectCollision(projectile, this.player)) {
-              projectileList.remove(projectile);
-              this.player.hit = true;
-              this.player.animationLock = true;
-            }
-            projectile.update(this.ctx);
-          });
-
-          explosionList.arr.forEach((explosion) => {
-            if (explosion.frame >= 20) explosionList.remove(explosion);
-            explosion.update(this.ctx);
-          });
+          this.player.lvlWon = true;
+          projectileList.reset();
         }
-      }
-    };
+        this.ctx.clearRect(0, 0, innerWidth, innerHeight);
+        this.player?.update(this.ctx);
 
+        fleet.arr.forEach((invader) => {
+          invader.update(this.ctx);
+        });
+
+        projectileList.arr.forEach((projectile) => {
+          fleet.arr.forEach((invader) => {
+            const hit = detectCollision(projectile, invader);
+            if (hit && projectile.dy > 0) {
+              const explosion = new Explosion(invader.x, invader.y);
+              explosionList.add(explosion);
+              this.player.score += invader.scoreVal;
+              projectileList.remove(projectile);
+              fleet.destroyShip(invader);
+            } else if (hit && projectile.dy < 0)
+              projectileList.remove(projectile);
+            else return;
+          });
+          if (this.player && detectCollision(projectile, this.player)) {
+            projectileList.remove(projectile);
+            this.player.hit = true;
+            this.player.animationLock = true;
+          }
+          projectile.update(this.ctx);
+        });
+
+        explosionList.arr.forEach((explosion) => {
+          if (explosion.frame >= 20) explosionList.remove(explosion);
+          explosion.update(this.ctx);
+        });
+      }
+    }
+  };
+
+  gameLoop() {
     this.levelStart();
 
-    animate();
+    this.animate();
+
     setTimeout(() => {
       this.startAnimationsRunning = false;
       this.player.animationLock = false;
