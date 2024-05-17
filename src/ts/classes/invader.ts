@@ -1,8 +1,12 @@
 import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
+import InvaderSprite from "../../assets/sprites/invader.png";
+
+const invaderSprite = new Image();
+invaderSprite.src = InvaderSprite;
 
 export class Invader {
-  width: number = 50;
+  width: number = 60;
   height: number = 50;
   x: number;
   y: number;
@@ -17,6 +21,7 @@ export class Invader {
   };
   scoreVal: number = 100;
   animationLock: boolean = true;
+  sprite: CanvasImageSource = invaderSprite;
 
   constructor(
     posX: number,
@@ -69,8 +74,7 @@ export class Invader {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
   }
 
   update(ctx: CanvasRenderingContext2D | null) {

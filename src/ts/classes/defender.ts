@@ -1,9 +1,13 @@
 import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
 import { flyOutGen } from "../utils/defenderAnimations";
+import DefenderSprite from "../../assets/sprites/defender.png";
+
+const defenderSprite = new Image();
+defenderSprite.src = DefenderSprite;
 
 export class Defender {
-  width: number = 50;
+  width: number = 65;
   height: number = 50;
   x: number = window.innerWidth / 2 - this.width / 2;
   y: number = window.innerHeight - this.height - 20;
@@ -15,6 +19,7 @@ export class Defender {
   lvlWon: boolean = false;
   flyOut = flyOutGen();
   animationLock: boolean = false;
+  sprite: CanvasImageSource = defenderSprite;
 
   constructor() {
     this.activeKey = {
@@ -25,8 +30,9 @@ export class Defender {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = "blue";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    // ctx.fillStyle = "blue";
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
   }
 
   keyDown(key: string, repeat: boolean) {

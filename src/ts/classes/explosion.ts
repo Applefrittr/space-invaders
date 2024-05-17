@@ -1,4 +1,4 @@
-import SpriteSheet from "../../assets/sprites/spritesheet.png";
+import SpriteSheet from "../../assets/sprites/explosionsheet.png";
 
 const explosionSprite = new Image();
 explosionSprite.src = SpriteSheet;

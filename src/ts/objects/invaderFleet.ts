@@ -20,7 +20,7 @@ export const invaderFleet = () => {
   ) => {
     const maxColumns = 20;
     const maxRow = Math.ceil(count / maxColumns);
-    let posX = window.innerWidth - 50;
+    let posX = window.innerWidth - 60;
     const posY = 60;
     let currRow = 1;
 
@@ -30,7 +30,7 @@ export const invaderFleet = () => {
       arr.push(invader);
       if (Math.floor(i / maxColumns) === currRow) {
         currRow++;
-        posX = window.innerWidth - 50;
+        posX = window.innerWidth - 60;
       } else posX -= spacing;
     }
   };
