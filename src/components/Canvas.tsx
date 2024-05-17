@@ -14,10 +14,14 @@ interface propObjects {
 function Canvas({ defender, game, bgPause }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [score, setScore] = useState<number>(defender.score);
-  const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(
-    game.startAnimationsRunning
-  );
+  const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const scoreRef = useRef<number>();
+  scoreRef.current = score;
+
+  const displayLvlRef = useRef<boolean>();
+  displayLvlRef.current = displayLvlBanner;
 
   interface Event {
     key: string;
@@ -52,8 +56,12 @@ function Canvas({ defender, game, bgPause }: propObjects) {
 
       const updateStates = () => {
         updateStateFrameID = requestAnimationFrame(updateStates);
-        if (defender.score !== score) setScore(defender.score);
-        setDisplayLvlBanner(game.startAnimationsRunning);
+        if (defender.score !== scoreRef.current) {
+          setScore(defender.score);
+        }
+        if (game.startAnimationsRunning !== displayLvlRef.current) {
+          setDisplayLvlBanner(game.startAnimationsRunning);
+        }
       };
 
       updateStates();
