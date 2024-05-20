@@ -6,8 +6,8 @@ export const detectCollision = (
   projectile: Projectile,
   ship: Invader | Defender
 ) => {
-  let dx = Math.abs(projectile.x - (ship.x + ship.width / 2));
-  let dy = Math.abs(projectile.y - (ship.y + ship.height / 2));
+  let dx = Math.abs(projectile.canvasX - (ship.x + ship.width / 2));
+  let dy = Math.abs(projectile.canvasY - (ship.y + ship.height / 2));
 
   if (dx > projectile.radius + ship.width / 2) return false;
 

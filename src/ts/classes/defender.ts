@@ -10,10 +10,11 @@ export class Defender {
   width: number = 65;
   height: number = 50;
   x: number = window.innerWidth / 2 - this.width / 2;
-  y: number = window.innerHeight - this.height - 20;
+  y: number = window.innerHeight - this.height - 50;
   dx: number = 10;
   activeKey: { a: boolean; d: boolean; space: boolean };
   hit: boolean = false;
+  destroyed: boolean = false;
   hps: number = 3;
   score: number = 0;
   lvlWon: boolean = false;
@@ -66,18 +67,13 @@ export class Defender {
   }
 
   fire() {
-    const bullet = new Projectile(
-      this.x + this.width / 2,
-      this.y - 20,
-      10,
-      "green"
-    );
+    const bullet = new Projectile(this.x + this.width / 2, this.y - 15, 10);
     projectileList.add(bullet);
   }
 
   reset() {
     this.x = window.innerWidth / 2 - this.width / 2;
-    this.y = window.innerHeight - this.height - 20;
+    this.y = window.innerHeight - this.height - 50;
   }
 
   animateFlyOut() {
@@ -91,6 +87,7 @@ export class Defender {
 
   update(ctx: CanvasRenderingContext2D) {
     // console.log("update");
+    if (this.destroyed) return;
     this.draw(ctx);
     if (this.animationLock) return;
     if (this.lvlWon) {

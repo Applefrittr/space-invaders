@@ -100,7 +100,7 @@ export class Invader {
       this.x + this.width / 2,
       this.y + this.height + 15,
       this.dyProj,
-      "orange"
+      "#ff88c7"
     );
     projectileList.add(bullet);
     this.frame = 0;

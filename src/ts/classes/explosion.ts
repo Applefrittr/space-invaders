@@ -1,29 +1,37 @@
-import SpriteSheet from "../../assets/sprites/explosionsheet.png";
+import InvExpSheet from "../../assets/sprites/invaderexplosionsheet.png";
+import DefExpSheet from "../../assets/sprites/defenderexplosionsheet.png";
 
-const explosionSprite = new Image();
-explosionSprite.src = SpriteSheet;
+const invaderExpSprite = new Image();
+invaderExpSprite.src = InvExpSheet;
+
+const defenderExpSprite = new Image();
+defenderExpSprite.src = DefExpSheet;
 
 export class Explosion {
   sourceX: number = 0;
+  sourceY: number = 0;
   canvasX: number;
   canvasY: number;
-  width: number = 75;
-  height: number = 75;
-  sprite: CanvasImageSource = explosionSprite;
+  width: number = 100;
+  height: number = 100;
+  invSprite: CanvasImageSource = invaderExpSprite;
+  defSprite: CanvasImageSource = defenderExpSprite;
   frame: number = 1;
-  maxFrame: number = 30;
+  maxFrame: number = 91;
+  useInvSprite: boolean;
 
-  constructor(posX: number, posY: number) {
+  constructor(posX: number, posY: number, invaderExplosion: boolean) {
     this.canvasX = posX;
     this.canvasY = posY;
+    this.useInvSprite = invaderExplosion;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.globalCompositeOperation = "source-over";
     ctx.drawImage(
-      this.sprite,
+      this.useInvSprite ? this.invSprite : this.defSprite,
       this.sourceX,
-      0,
+      this.sourceY,
       this.width,
       this.height,
       this.canvasX - this.width / 2,
@@ -36,9 +44,11 @@ export class Explosion {
   update(ctx: CanvasRenderingContext2D | null) {
     if (ctx) {
       this.draw(ctx);
-      if (this.frame % 3 === 0) this.sourceX += this.width;
+      if (this.frame % 10 === 0) {
+        this.sourceY += this.height;
+        this.sourceX = 0;
+      } else this.sourceX += this.width;
       this.frame++;
-      if (this.sourceX >= 750) this.sourceX = 0;
     }
   }
 }

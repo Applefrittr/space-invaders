@@ -64,6 +64,7 @@ export class Game {
             this.stop();
             this.level = 0;
             this.player.score = 0;
+            this.player.destroyed = false;
             this.gameLoop();
           }, 2000);
         } else if (fleet.arr.length === 0) {
@@ -90,7 +91,7 @@ export class Game {
           fleet.arr.forEach((invader) => {
             const hit = detectCollision(projectile, invader);
             if (hit && projectile.dy > 0) {
-              const explosion = new Explosion(invader.x, invader.y);
+              const explosion = new Explosion(invader.x, invader.y, true);
               explosionList.add(explosion);
               this.player.score += invader.scoreVal;
               projectileList.remove(projectile);
@@ -99,9 +100,20 @@ export class Game {
               projectileList.remove(projectile);
             else return;
           });
-          if (this.player && detectCollision(projectile, this.player)) {
+          if (
+            this.player &&
+            detectCollision(projectile, this.player) &&
+            !this.player.destroyed
+          ) {
+            const explosion = new Explosion(
+              this.player.x,
+              this.player.y,
+              false
+            );
+            explosionList.add(explosion);
             projectileList.remove(projectile);
             this.player.hit = true;
+            this.player.destroyed = true;
             this.player.animationLock = true;
           }
           projectile.update(this.ctx);
