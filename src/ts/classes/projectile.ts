@@ -50,9 +50,9 @@ export class Projectile {
       this.draw(ctx);
       this.frame++;
       this.canvasY -= this.dy;
-      if (this.frame > 39) {
-        this.sourceX = 0;
-        this.frame = 2;
+      if (this.frame > 36) {
+        this.sourceX = this.width * 2;
+        this.frame = 1;
       } else {
         if (this.frame % 3 === 0) this.sourceX += this.width;
         this.frame++;
