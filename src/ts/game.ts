@@ -37,7 +37,7 @@ export class Game {
       currLevel.shipCount,
       currLevel.shipVelocity,
       1,
-      80,
+      10,
       currLevel.projVelocity
     );
     this.startAnimationsRunning = true;
@@ -103,7 +103,8 @@ export class Game {
           if (
             this.player &&
             detectCollision(projectile, this.player) &&
-            !this.player.destroyed
+            !this.player.destroyed &&
+            projectile.dy < 0
           ) {
             const explosion = new Explosion(
               this.player.x,

@@ -8,7 +8,7 @@ export const invaderFleet = () => {
    * @param count number of Invader ships
    * @param velX velocity along the X axis
    * @param velY velocity along the Y axis
-   * @param spacing distance from an Invader's left border to an adjacent Invader's left border
+   * @param spacing gap between each Invader
    * @returns an array of Invader ships
    */
   const createFleet = (
@@ -20,18 +20,25 @@ export const invaderFleet = () => {
   ) => {
     const maxColumns = 20;
     const maxRow = Math.ceil(count / maxColumns);
-    let posX = window.innerWidth - 60;
+    let posX = window.innerWidth - 128;
     const posY = 60;
     let currRow = 1;
 
     for (let i = 1; i <= count; i++) {
       const invader = new Invader(posX, posY * currRow, velX, velY, velProj);
-      invader.setBounds(i, count, spacing, maxColumns, currRow, maxRow);
+      invader.setBounds(
+        i,
+        count,
+        invader.width + spacing,
+        maxColumns,
+        currRow,
+        maxRow
+      );
       arr.push(invader);
       if (Math.floor(i / maxColumns) === currRow) {
         currRow++;
-        posX = window.innerWidth - 60;
-      } else posX -= spacing;
+        posX = window.innerWidth - 128;
+      } else posX -= invader.width + spacing;
     }
   };
 

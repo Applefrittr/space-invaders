@@ -1,19 +1,21 @@
 import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
-import InvaderSprite from "../../assets/sprites/invader.png";
+import InvaderSpriteSheet from "../../assets/sprites/invader3.png";
 
-const invaderSprite = new Image();
-invaderSprite.src = InvaderSprite;
+const invaderFull = new Image();
+invaderFull.src = InvaderSpriteSheet;
 
 export class Invader {
-  width: number = 60;
-  height: number = 50;
+  sourceX: number = 0;
+  width: number = 64;
+  height: number = 64;
   x: number;
   y: number;
   dx: number;
   dy: number;
   dyProj: number;
   frame: number = 0;
+  fireFrame: number = 0;
   fireInterval: number = (Math.random() * 7 + 1) * 60;
   bounds: {
     rightX: number;
@@ -21,7 +23,7 @@ export class Invader {
   };
   scoreVal: number = 100;
   animationLock: boolean = true;
-  sprite: CanvasImageSource = invaderSprite;
+  spriteFull: CanvasImageSource = invaderFull;
 
   constructor(
     posX: number,
@@ -74,7 +76,17 @@ export class Invader {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
+    ctx.drawImage(
+      this.spriteFull,
+      this.sourceX,
+      0,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
   update(ctx: CanvasRenderingContext2D | null) {
@@ -82,6 +94,7 @@ export class Invader {
       this.draw(ctx);
       if (this.animationLock) return;
       this.x -= this.dx;
+      this.frame % 8 === 0 ? (this.sourceX = 0) : (this.sourceX += this.width);
       this.frame++;
       if (this.x <= this.bounds.leftX) {
         this.dx = -this.dx;
@@ -89,8 +102,10 @@ export class Invader {
       if (this.x >= this.bounds.rightX) {
         this.dx = -this.dx;
       }
-      if (this.frame >= this.fireInterval) {
+      this.fireFrame++;
+      if (this.fireFrame > this.fireInterval) {
         this.fire();
+        this.fireFrame = 0;
       }
     }
   }
@@ -99,10 +114,8 @@ export class Invader {
     const bullet = new Projectile(
       this.x + this.width / 2,
       this.y + this.height + 15,
-      this.dyProj,
-      "#ff88c7"
+      this.dyProj
     );
     projectileList.add(bullet);
-    this.frame = 0;
   }
 }

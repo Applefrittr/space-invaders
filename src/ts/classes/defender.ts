@@ -67,7 +67,7 @@ export class Defender {
   }
 
   fire() {
-    const bullet = new Projectile(this.x + this.width / 2, this.y - 15, 10);
+    const bullet = new Projectile(this.x + this.width / 2, this.y, 10);
     projectileList.add(bullet);
   }
 
