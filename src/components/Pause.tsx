@@ -4,17 +4,25 @@ import SPACE from "../assets/SpaceKey.png";
 
 interface propFunctions {
   resume: () => void;
+  returnToMenu: () => void;
 }
 
-function Pause({ resume }: propFunctions) {
+function Pause({ resume, returnToMenu }: propFunctions) {
   return (
     <section className="Pause">
       <h2>Game Paused</h2>
-      <button onClick={resume} className="btns">
-        <div className="btn-contents">
-          <span>Resume</span>
-        </div>
-      </button>
+      <div className="btn-container">
+        <button onClick={resume} className="btns">
+          <div className="btn-contents">
+            <span>Resume</span>
+          </div>
+        </button>
+        <button onClick={returnToMenu} className="btns">
+          <div className="btn-contents">
+            <span>Main Menu</span>
+          </div>
+        </button>
+      </div>
       <div className="controls-container">
         Controls
         <div>

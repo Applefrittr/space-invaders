@@ -28,6 +28,11 @@
   z-index: -1;
 }
 
+.btn-container {
+  display: flex;
+  gap: 2rem;
+}
+
 .btns {
   font-family: Supercharge;
   text-decoration: none;

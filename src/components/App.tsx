@@ -21,6 +21,12 @@ function App() {
     setScore(player.score);
   };
 
+  const returnToMenu = () => {
+    setDefender(undefined);
+    setGame(undefined);
+    spaceCanvas.pause();
+  };
+
   const bgPause = () => {
     spaceCanvas.pause();
   };
@@ -44,6 +50,7 @@ function App() {
           game={game}
           bgPause={bgPause}
           score={score}
+          returnToMenu={returnToMenu}
         ></Canvas>
       )}
       <canvas

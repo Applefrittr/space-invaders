@@ -146,6 +146,9 @@ export class Game {
   stop() {
     if (this.ctx) {
       cancelAnimationFrame(this.requestID);
+      this.player.reset();
+      fleet.reset();
+      projectileList.reset();
       this.ctx.clearRect(0, 0, innerWidth, innerHeight);
     }
   }

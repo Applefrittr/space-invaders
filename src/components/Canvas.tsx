@@ -9,9 +9,10 @@ interface propObjects {
   game: Game;
   bgPause: () => void;
   score: number;
+  returnToMenu: () => void;
 }
 
-function Canvas({ defender, game, bgPause }: propObjects) {
+function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [score, setScore] = useState<number>(defender.score);
   const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(true);
@@ -93,7 +94,9 @@ function Canvas({ defender, game, bgPause }: propObjects) {
           </button>
         </div>
       </div>
-      {isPaused && <Pause resume={togglePause}></Pause>}
+      {isPaused && (
+        <Pause resume={togglePause} returnToMenu={returnToMenu}></Pause>
+      )}
       <AnimatePresence>
         {displayLvlBanner && (
           <motion.section
