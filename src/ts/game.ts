@@ -37,7 +37,7 @@ export class Game {
       currLevel.shipCount,
       currLevel.shipVelocity,
       1,
-      10,
+      15,
       currLevel.projVelocity
     );
     this.startAnimationsRunning = true;

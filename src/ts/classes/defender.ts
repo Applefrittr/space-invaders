@@ -7,8 +7,10 @@ const defenderSprite = new Image();
 defenderSprite.src = DefenderSprite;
 
 export class Defender {
-  width: number = 65;
-  height: number = 50;
+  sourceX: number = 0;
+  sourceY: number = 0;
+  width: number = 90;
+  height: number = 102;
   x: number = window.innerWidth / 2 - this.width / 2;
   y: number = window.innerHeight - this.height - 50;
   dx: number = 10;
@@ -21,6 +23,7 @@ export class Defender {
   flyOut = flyOutGen();
   animationLock: boolean = false;
   sprite: CanvasImageSource = defenderSprite;
+  frame: number = 1;
 
   constructor() {
     this.activeKey = {
@@ -33,7 +36,17 @@ export class Defender {
   draw(ctx: CanvasRenderingContext2D) {
     // ctx.fillStyle = "blue";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
+    ctx.drawImage(
+      this.sprite,
+      this.sourceX,
+      this.sourceY,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
   keyDown(key: string, repeat: boolean) {
@@ -90,6 +103,8 @@ export class Defender {
     if (this.destroyed) return;
     this.draw(ctx);
     if (this.animationLock) return;
+    this.frame % 4 === 0 ? (this.sourceX = 0) : (this.sourceX += this.width);
+    this.frame++;
     if (this.lvlWon) {
       this.animateFlyOut();
       if (this.y + this.height <= 0) {
