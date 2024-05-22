@@ -15,7 +15,7 @@ export class Projectile {
   height: number = 72;
   canvasX: number;
   canvasY: number;
-  radius: number;
+  radius: number = 10;
   dy: number;
   color: string | undefined;
   defprojectile: CanvasImageSource = defProjectileSprite;
@@ -25,7 +25,6 @@ export class Projectile {
   constructor(x: number, y: number, dy: number, color?: string) {
     this.canvasX = x;
     this.canvasY = y;
-    this.radius = 10;
     this.dy = dy;
     this.color = color;
   }
@@ -38,8 +37,8 @@ export class Projectile {
       this.sourceY,
       this.width,
       this.height,
-      this.canvasX - this.width / 2,
-      this.canvasY - this.height / 2,
+      this.canvasX - this.width / 2 / 2,
+      this.canvasY - this.height / 2 / 2,
       this.width / 2,
       this.height / 2
     );

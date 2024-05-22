@@ -84,8 +84,8 @@ export class Invader {
       this.height,
       this.x,
       this.y,
-      this.width + 15,
-      this.height + 5
+      this.width,
+      this.height
     );
   }
 

@@ -9,10 +9,10 @@ defenderSprite.src = DefenderSprite;
 export class Defender {
   sourceX: number = 0;
   sourceY: number = 0;
-  width: number = 90;
-  height: number = 102;
+  width: number = 64;
+  height: number = 74;
   x: number = window.innerWidth / 2 - this.width / 2;
-  y: number = window.innerHeight - this.height - 50;
+  y: number = window.innerHeight - this.height - 10;
   dx: number = 10;
   activeKey: { a: boolean; d: boolean; space: boolean };
   hit: boolean = false;
@@ -80,13 +80,13 @@ export class Defender {
   }
 
   fire() {
-    const bullet = new Projectile(this.x + this.width / 2, this.y, 10);
+    const bullet = new Projectile(this.x + this.width / 2, this.y + 10, 10);
     projectileList.add(bullet);
   }
 
   reset() {
     this.x = window.innerWidth / 2 - this.width / 2;
-    this.y = window.innerHeight - this.height - 50;
+    this.y = window.innerHeight - this.height - 10;
   }
 
   animateFlyOut() {
