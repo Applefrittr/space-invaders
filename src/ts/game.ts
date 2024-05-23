@@ -12,6 +12,7 @@ export class Game {
   level: number;
   ctx: CanvasRenderingContext2D | null = null;
   isPaused: boolean = false;
+  gameOver: boolean = false;
   requestID: number = 0;
   startAnimationsRunning: boolean = false;
   msPrev: number = performance.now();
@@ -29,6 +30,7 @@ export class Game {
   }
 
   levelStart() {
+    this.gameOver = false;
     const currLevel = this.levelArray[this.level];
     this.player.reset();
     fleet.reset();
@@ -61,11 +63,8 @@ export class Game {
           this.player.hit = false;
           setTimeout(() => {
             this.player.animationLock = false;
-            this.stop();
-            this.level = 0;
-            this.player.score = 0;
-            this.player.destroyed = false;
-            this.gameLoop();
+            this.gameOver = true;
+            //this.gameRestart();
           }, 2000);
         } else if (fleet.arr.length === 0) {
           if (this.player.y + this.player.height <= 0) {
@@ -141,6 +140,14 @@ export class Game {
         invader.animationLock = false;
       });
     }, 3000);
+  }
+
+  gameRestart() {
+    this.stop();
+    this.level = 0;
+    this.player.score = 0;
+    this.player.destroyed = false;
+    this.gameLoop();
   }
 
   stop() {

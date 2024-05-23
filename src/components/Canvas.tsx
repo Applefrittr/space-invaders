@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Game } from "../ts/game";
 import { Defender } from "../ts/classes/defender";
 import Pause from "./Pause";
+import GameOver from "./GameOver";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface propObjects {
@@ -16,6 +17,7 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [score, setScore] = useState<number>(defender.score);
   const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(true);
+  const [displayGameOver, setDisplayGameOver] = useState<boolean>(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const scoreRef = useRef<number>();
@@ -44,6 +46,12 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
     canvasRef.current?.focus();
   };
 
+  const restartGame = () => {
+    setDisplayGameOver(false);
+    game.gameRestart();
+    canvasRef.current?.focus();
+  };
+
   useEffect(() => {
     let updateStateFrameID: number;
 
@@ -63,6 +71,7 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
         if (game.startAnimationsRunning !== displayLvlRef.current) {
           setDisplayLvlBanner(game.startAnimationsRunning);
         }
+        if (game.gameOver === true) setDisplayGameOver(true);
       };
 
       updateStates();
@@ -110,6 +119,7 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
           </motion.section>
         )}
       </AnimatePresence>
+      {displayGameOver && <GameOver restartGame={restartGame} />}
     </section>
   );
 }
