@@ -6,9 +6,12 @@ import { Defender } from "../ts/classes/defender";
 import { Game } from "../ts/game";
 import { levelArray } from "../ts/objects/levels";
 import { spaceCanvas } from "../ts/space";
+import { db } from "../db/firebase";
+import ScoreBoard from "./ScoreBoard";
 
 function App() {
   const [defender, setDefender] = useState<Defender>();
+  const [displayScoreBoard, setDisplayScoreBoard] = useState<boolean>(false);
   const [game, setGame] = useState<Game>();
   const [score, setScore] = useState<number>(0);
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,6 +30,10 @@ function App() {
     spaceCanvas.pause();
   };
 
+  const toggleScoreBoard = () => {
+    setDisplayScoreBoard((prev) => !prev);
+  };
+
   const bgPause = () => {
     spaceCanvas.pause();
   };
@@ -43,8 +50,10 @@ function App() {
 
   return (
     <section className="App">
-      {!defender && !game && <Menu startGame={startGame}></Menu>}
-      {defender && game && (
+      {!defender && !game && !displayScoreBoard && (
+        <Menu startGame={startGame} toggleScoreBoard={toggleScoreBoard}></Menu>
+      )}
+      {defender && game && !displayScoreBoard && (
         <Canvas
           defender={defender}
           game={game}
@@ -52,6 +61,9 @@ function App() {
           score={score}
           returnToMenu={returnToMenu}
         ></Canvas>
+      )}
+      {displayScoreBoard && (
+        <ScoreBoard db={db} toggleScoreBoard={toggleScoreBoard}></ScoreBoard>
       )}
       <canvas
         ref={bgCanvasRef}
