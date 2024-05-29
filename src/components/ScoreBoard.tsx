@@ -1,53 +1,70 @@
 import {
-  Firestore,
   collection,
   getDocs,
   DocumentData,
+  query,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { db } from "../db/firebase";
 
 interface propObjects {
-  db: Firestore;
   toggleScoreBoard: () => void;
 }
 
-function ScoreBoard({ db, toggleScoreBoard }: propObjects) {
+function ScoreBoard({ toggleScoreBoard }: propObjects) {
   const [scores, setScores] = useState<DocumentData[]>();
+  const [err, setErr] = useState<string>();
 
   useEffect(() => {
     const getScores = async () => {
-      const userData: DocumentData[] = [];
-      const query = await getDocs(collection(db, "users"));
+      try {
+        const userData: DocumentData[] = [];
 
-      query.forEach((doc) => {
-        userData.push(doc.data());
-      });
+        const q = query(
+          collection(db, "users"),
+          orderBy("score", "desc"),
+          limit(10)
+        );
 
-      setScores(userData);
+        const data = await getDocs(q);
+        data.forEach((doc) => {
+          userData.push(doc.data());
+        });
+
+        setScores(userData);
+      } catch (e) {
+        setErr("Unable to retrieve scores...");
+      }
     };
 
     getScores();
   }, []);
 
-  useEffect(() => {
-    console.log(scores);
-  }, [scores]);
   return (
-    <section>
-      <h2>Score Board</h2>
-      <button onClick={toggleScoreBoard} className="btns">
-        <div className="btn-contents">
-          <span>Return</span>
-        </div>
-      </button>
-
-      {scores &&
-        scores.map((obj) => (
-          <div>
-            <p>{obj.score}</p>
-            <p>{obj.username}</p>
+    <section className="ScoreBoard">
+      <div className="sb-header">
+        <h2>Top Scores</h2>
+        <button onClick={toggleScoreBoard} className="btns">
+          <div className="btn-contents">
+            <span>Return</span>
           </div>
-        ))}
+        </button>
+      </div>
+      <div className="sb-table">
+        {scores &&
+          scores.map((obj, index) => (
+            <div className="user-card">
+              <p>{index + 1}.</p>
+              <div className="user-card-info">
+                <p>{obj.username}</p>
+                <p>{obj.score}</p>
+              </div>
+            </div>
+          ))}
+        {err && <i>{err}</i>}
+      </div>
     </section>
   );
 }

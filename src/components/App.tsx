@@ -6,7 +6,6 @@ import { Defender } from "../ts/classes/defender";
 import { Game } from "../ts/game";
 import { levelArray } from "../ts/objects/levels";
 import { spaceCanvas } from "../ts/space";
-import { db } from "../db/firebase";
 import ScoreBoard from "./ScoreBoard";
 
 function App() {
@@ -63,7 +62,7 @@ function App() {
         ></Canvas>
       )}
       {displayScoreBoard && (
-        <ScoreBoard db={db} toggleScoreBoard={toggleScoreBoard}></ScoreBoard>
+        <ScoreBoard toggleScoreBoard={toggleScoreBoard}></ScoreBoard>
       )}
       <canvas
         ref={bgCanvasRef}

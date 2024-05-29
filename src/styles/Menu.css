@@ -12,3 +12,8 @@
   font-family: Supercharge;
   font-size: 4rem;
 }
+
+.menu-btn-container {
+  display: flex;
+  gap: 1rem;
+}

@@ -2,6 +2,7 @@
 @import url("./Pause.css");
 @import url("./Menu.css");
 @import url("./GameOver.css");
+@import url("./ScoreBoard.css");
 
 * {
   box-sizing: border-box;
