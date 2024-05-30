@@ -57,10 +57,8 @@ function ScoreBoard({ toggleScoreBoard }: propObjects) {
           scores.map((obj, index) => (
             <div className="user-card" key={index}>
               <p>{index + 1}.</p>
-              <div className="user-card-info">
-                <p>{obj.username}</p>
-                <p>{obj.score}</p>
-              </div>
+              <i>{obj.username}</i>
+              <p>{obj.score}</p>
             </div>
           ))}
         {err && <i>{err}</i>}

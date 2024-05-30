@@ -14,17 +14,27 @@
 }
 
 .sb-table {
-  flex: 1;
   border: 2px solid white;
   gap: 1rem;
 }
 
 .user-card {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 0.25fr 5fr 1fr;
   border-bottom: solid 1px white;
-  padding: 1rem;
   font-family: SuperCharge;
+}
+
+.user-card > p {
+  padding: 1rem;
+  background-color: white;
+  color: black;
+  text-align: center;
+  min-width: max(100%, 48px);
+}
+
+.user-card > i {
+  padding: 1rem;
 }
 
 .user-card-info {
