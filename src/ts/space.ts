@@ -20,8 +20,6 @@ function space() {
       const msNow = performance.now();
       const msPassed = msNow - msPrev;
 
-      //console.log(msPassed);
-
       if (msPassed < msPerFrame) return;
 
       const msExcess = msPassed % msPerFrame;
@@ -49,6 +47,7 @@ function space() {
   };
 
   return {
+    isPaused,
     setContext,
     start,
     pause,

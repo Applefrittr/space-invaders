@@ -29,9 +29,43 @@
   gap: 1rem;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .form-input-container {
   display: flex;
   gap: 1rem;
+}
+
+.form-error {
+  color: black;
+  background-color: white;
+  padding: 1rem;
+  position: absolute;
+  bottom: -70px;
+  width: max-content;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: translateX(0px);
+  }
+  33% {
+    transform: translateX(-10px);
+  }
+  66% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }

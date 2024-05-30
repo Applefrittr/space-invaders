@@ -7,7 +7,7 @@ function Menu({ startGame, toggleScoreBoard }: propFunctions) {
   return (
     <section className="Menu">
       <h1>Space Invaders</h1>
-      <div className="menu-btn-container">
+      <div className="btn-container">
         <button onClick={startGame} className="btns">
           <div className="btn-contents">
             <span>Start</span>

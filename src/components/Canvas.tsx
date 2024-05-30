@@ -120,7 +120,11 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
         )}
       </AnimatePresence>
       {displayGameOver && (
-        <GameOver restartGame={restartGame} score={defender.score} />
+        <GameOver
+          restartGame={restartGame}
+          score={defender.score}
+          returnToMenu={returnToMenu}
+        />
       )}
     </section>
   );

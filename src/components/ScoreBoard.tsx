@@ -55,7 +55,7 @@ function ScoreBoard({ toggleScoreBoard }: propObjects) {
       <div className="sb-table">
         {scores &&
           scores.map((obj, index) => (
-            <div className="user-card">
+            <div className="user-card" key={index}>
               <p>{index + 1}.</p>
               <div className="user-card-info">
                 <p>{obj.username}</p>
