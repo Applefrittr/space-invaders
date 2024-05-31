@@ -13,11 +13,13 @@ export class Game {
   ctx: CanvasRenderingContext2D | null = null;
   isPaused: boolean = false;
   gameOver: boolean = false;
+  gameWon: boolean = false;
   requestID: number = 0;
   startAnimationsRunning: boolean = false;
   msPrev: number = performance.now();
   fps: number = 60;
   msPerFrame: number = 1000 / this.fps;
+  controlsLocked: boolean = true;
 
   constructor(player: Defender, levelArray: Level[], level: number) {
     this.player = player;
@@ -32,6 +34,10 @@ export class Game {
   levelStart() {
     this.gameOver = false;
     const currLevel = this.levelArray[this.level];
+    if (!currLevel) {
+      this.gameWon = true;
+      return;
+    }
     this.player.reset();
     fleet.reset();
     projectileList.reset();
@@ -42,6 +48,7 @@ export class Game {
       15,
       currLevel.projVelocity
     );
+    this.controlsLocked = true;
     this.startAnimationsRunning = true;
     this.player.animationLock = true;
   }
@@ -60,11 +67,11 @@ export class Game {
 
       if (!this.isPaused) {
         if (this.player && this.player.hit) {
+          this.controlsLocked = true;
           this.player.hit = false;
           setTimeout(() => {
             this.player.animationLock = false;
             this.gameOver = true;
-            //this.gameRestart();
           }, 2000);
         } else if (fleet.arr.length === 0) {
           if (this.player.y + this.player.height <= 0) {
@@ -76,6 +83,7 @@ export class Game {
             }, 2000);
             return;
           }
+          this.controlsLocked = true;
           this.player.lvlWon = true;
           projectileList.reset();
         }
@@ -130,10 +138,12 @@ export class Game {
 
   gameLoop() {
     this.levelStart();
-
+    if (this.gameWon) {
+      return;
+    }
     this.animate();
-
     setTimeout(() => {
+      this.controlsLocked = false;
       this.startAnimationsRunning = false;
       this.player.animationLock = false;
       fleet.arr.forEach((invader) => {

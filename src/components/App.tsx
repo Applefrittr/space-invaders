@@ -26,7 +26,13 @@ function App() {
   const returnToMenu = () => {
     setDefender(undefined);
     setGame(undefined);
-    if (spaceCanvas.isPaused) spaceCanvas.pause();
+    spaceCanvas.pause();
+  };
+
+  const returnToMenuFromGO = () => {
+    setDefender(undefined);
+    setGame(undefined);
+    spaceCanvas.resume();
   };
 
   const toggleScoreBoard = () => {
@@ -59,6 +65,7 @@ function App() {
           bgPause={bgPause}
           score={score}
           returnToMenu={returnToMenu}
+          returnToMenuFromGO={returnToMenuFromGO}
         ></Canvas>
       )}
       {displayScoreBoard && (

@@ -11,14 +11,26 @@ interface propObjects {
   bgPause: () => void;
   score: number;
   returnToMenu: () => void;
+  returnToMenuFromGO: () => void;
 }
 
-function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
+function Canvas({
+  defender,
+  game,
+  bgPause,
+  returnToMenu,
+  returnToMenuFromGO,
+}: propObjects) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [disablePauseBtn, setDisabledPauseBtn] = useState<boolean>(true);
   const [score, setScore] = useState<number>(defender.score);
   const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(true);
   const [displayGameOver, setDisplayGameOver] = useState<boolean>(false);
+  const [gameOverMsg, setGameOverMsg] = useState<string>("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const disablePauseBtnRef = useRef<boolean>();
+  disablePauseBtnRef.current = game.controlsLocked;
 
   const scoreRef = useRef<number>();
   scoreRef.current = score;
@@ -71,7 +83,17 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
         if (game.startAnimationsRunning !== displayLvlRef.current) {
           setDisplayLvlBanner(game.startAnimationsRunning);
         }
-        if (game.gameOver === true) setDisplayGameOver(true);
+        if (game.controlsLocked !== disablePauseBtnRef.current) {
+          setDisabledPauseBtn((prev) => !prev);
+        }
+        if (game.gameOver === true) {
+          setGameOverMsg("Game Over");
+          setDisplayGameOver(true);
+        }
+        if (game.gameWon === true) {
+          setGameOverMsg("Victory!");
+          setDisplayGameOver(true);
+        }
       };
 
       updateStates();
@@ -82,6 +104,11 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // useEffect(() => {
+  //   setDisabledPauseBtn((prev) => !prev);
+  //   console.log("change");
+  // }, [game.controlsLocked]);
 
   return (
     <section className="gameview">
@@ -96,7 +123,10 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
       <div className="game-hud">
         <div className="hud-top">
           <div>Score: {score}</div>
-          <button onClick={togglePause} className="btns btns-small">
+          <button
+            onClick={togglePause}
+            className={`btns btns-small ${disablePauseBtn ? "disabled" : ""}`}
+          >
             <div className="btn-contents">
               <span>Pause</span>
             </div>
@@ -121,9 +151,10 @@ function Canvas({ defender, game, bgPause, returnToMenu }: propObjects) {
       </AnimatePresence>
       {displayGameOver && (
         <GameOver
+          gameOverMsg={gameOverMsg}
           restartGame={restartGame}
           score={defender.score}
-          returnToMenu={returnToMenu}
+          returnToMenuFromGO={returnToMenuFromGO}
         />
       )}
     </section>

@@ -29,4 +29,4 @@ const createLevels = (count: number) => {
   return arr;
 };
 
-export const levelArray = createLevels(20);
+export const levelArray = createLevels(25);

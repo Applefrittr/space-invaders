@@ -11,12 +11,18 @@ import { useEffect, useRef, useState } from "react";
 import { db } from "../db/firebase";
 
 interface propObjects {
+  gameOverMsg: string;
   restartGame: () => void;
   score: number;
-  returnToMenu: () => void;
+  returnToMenuFromGO: () => void;
 }
 
-function GameOver({ restartGame, score, returnToMenu }: propObjects) {
+function GameOver({
+  gameOverMsg,
+  restartGame,
+  score,
+  returnToMenuFromGO,
+}: propObjects) {
   const [newHighScore, setNewHighScore] = useState<boolean>();
   const [errMsg, setErrMsg] = useState<string>("");
   const [errWiggle, setErrWiggle] = useState<boolean>(false);
@@ -96,15 +102,17 @@ function GameOver({ restartGame, score, returnToMenu }: propObjects) {
   return (
     <section className="GameOver">
       <div className="GO-container">
-        <h2>Game Over</h2>
+        <h2>{gameOverMsg}</h2>
         <i>Score: {score}</i>
         <div className="btn-container">
-          <button onClick={restartGame} className="btns">
-            <div className="btn-contents">
-              <span>Retry</span>
-            </div>
-          </button>
-          <button onClick={returnToMenu} className="btns">
+          {gameOverMsg !== "Victory!" && (
+            <button onClick={restartGame} className="btns">
+              <div className="btn-contents">
+                <span>Retry</span>
+              </div>
+            </button>
+          )}
+          <button onClick={returnToMenuFromGO} className="btns">
             <div className="btn-contents">
               <span>Main Menu</span>
             </div>

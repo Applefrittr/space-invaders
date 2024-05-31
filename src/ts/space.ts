@@ -46,8 +46,12 @@ function space() {
     isPaused = !isPaused;
   };
 
+  const resume = () => {
+    isPaused = false;
+  };
+
   return {
-    isPaused,
+    resume,
     setContext,
     start,
     pause,
