@@ -69,7 +69,6 @@ function App() {
 
   useEffect(() => {
     if (audio.current) {
-      audio.current.defaultMuted = true;
       audio.current.muted = true;
     }
     if (bgCanvasRef.current) {
