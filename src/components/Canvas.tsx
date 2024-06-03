@@ -105,11 +105,6 @@ function Canvas({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   setDisabledPauseBtn((prev) => !prev);
-  //   console.log("change");
-  // }, [game.controlsLocked]);
-
   return (
     <section className="gameview">
       <canvas

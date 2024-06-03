@@ -44,14 +44,12 @@ function ScoreBoard({ toggleScoreBoard }: propObjects) {
 
   return (
     <section className="ScoreBoard">
-      <div className="sb-header">
-        <h2>Top Scores</h2>
-        <button onClick={toggleScoreBoard} className="btns">
-          <div className="btn-contents">
-            <span>Return</span>
-          </div>
-        </button>
-      </div>
+      <button onClick={toggleScoreBoard} className="btns">
+        <div className="btn-contents">
+          <span>Return</span>
+        </div>
+      </button>
+      <h2>Top Scores</h2>
       <div className="sb-table">
         {scores &&
           scores.map((obj, index) => (

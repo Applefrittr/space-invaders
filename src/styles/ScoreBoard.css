@@ -7,10 +7,9 @@
   padding: 2rem;
 }
 
-.sb-header {
-  display: flex;
-  justify-content: space-between;
-  font-family: SuperCharge;
+.ScoreBoard > h2 {
+  text-align: center;
+  font-family: Supercharge;
 }
 
 .sb-table {

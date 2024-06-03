@@ -126,7 +126,7 @@ function GameOver({
             <input
               placeholder="username..."
               ref={inputRef}
-              className={`${disabled ? "disabled" : ""}`}
+              className={`GO-input ${disabled ? "disabled" : ""}`}
             ></input>
             <button
               className={`btns ${disabled ? "disabled" : ""}`}

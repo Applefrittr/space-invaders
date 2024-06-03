@@ -21,6 +21,19 @@
   justify-content: center;
 }
 
+.GO-input {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-bottom: 1px white solid;
+  font-family: SuperCharge;
+  font-size: 1.15rem;
+}
+
+.GO-input:focus {
+  outline: none;
+}
+
 .score-form {
   padding: 1rem;
   border: 1px solid white;

@@ -9,6 +9,8 @@
   top: 0;
   left: 0;
   width: inherit;
+  display: flex;
+  justify-content: center;
 }
 
 .hud-top {
@@ -17,6 +19,7 @@
   padding: 1rem;
   font-family: Supercharge;
   font-size: 1.5rem;
+  width: 350px;
 }
 
 .lvl-banner {
