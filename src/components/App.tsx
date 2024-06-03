@@ -68,6 +68,10 @@ function App() {
   };
 
   useEffect(() => {
+    if (audio.current) {
+      audio.current.defaultMuted = true;
+      audio.current.muted = true;
+    }
     if (bgCanvasRef.current) {
       const bgCanvas = bgCanvasRef.current;
       const ctx = bgCanvas.getContext("2d");
