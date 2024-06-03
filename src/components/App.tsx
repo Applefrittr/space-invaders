@@ -63,12 +63,14 @@ function App() {
   const toggleMute = () => {
     if (audio.current) {
       audio.current.muted = !audio.current.muted;
+      audio.current.defaultMuted = !audio.current.defaultMuted;
       setIsMuted((prev) => !prev);
     }
   };
 
   useEffect(() => {
     if (audio.current) {
+      audio.current.defaultMuted = true;
       audio.current.muted = true;
     }
     if (bgCanvasRef.current) {
