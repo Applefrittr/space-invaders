@@ -22,6 +22,7 @@ function App() {
 
   const audio = useRef<HTMLAudioElement>(null);
   let trackIndex = 0;
+  //const firstPlay = false;
 
   const startGame = () => {
     const player = new Defender();
@@ -62,6 +63,7 @@ function App() {
 
   const toggleMute = () => {
     if (audio.current) {
+      audio.current.play();
       audio.current.muted = !audio.current.muted;
       audio.current.defaultMuted = !audio.current.defaultMuted;
       setIsMuted((prev) => !prev);
@@ -72,6 +74,8 @@ function App() {
     if (audio.current) {
       audio.current.defaultMuted = true;
       audio.current.muted = true;
+      if (audio.current.duration === 0 && !audio.current.paused)
+        audio.current.play();
     }
     if (bgCanvasRef.current) {
       const bgCanvas = bgCanvasRef.current;

@@ -1,6 +1,7 @@
 import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
 import InvaderSpriteSheet from "../../assets/sprites/invader3.png";
+import InvLaser from "../../assets/sounds/invader-laser.mp3";
 
 const invaderFull = new Image();
 invaderFull.src = InvaderSpriteSheet;
@@ -117,5 +118,7 @@ export class Invader {
       this.dyProj
     );
     projectileList.add(bullet);
+    const laser = new Audio(InvLaser);
+    laser.play();
   }
 }

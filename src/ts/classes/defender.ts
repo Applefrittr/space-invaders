@@ -2,6 +2,7 @@ import { Projectile } from "./projectile";
 import { projectileList } from "../objects/projectiles";
 import { flyOutGen } from "../utils/defenderAnimations";
 import DefenderSprite from "../../assets/sprites/defender.png";
+import Laser from "../../assets/sounds/defender-laser.mp3";
 
 const defenderSprite = new Image();
 defenderSprite.src = DefenderSprite;
@@ -82,6 +83,8 @@ export class Defender {
   fire() {
     const bullet = new Projectile(this.x + this.width / 2, this.y + 10, 10);
     projectileList.add(bullet);
+    const sound = new Audio(Laser);
+    sound.play();
   }
 
   reset() {

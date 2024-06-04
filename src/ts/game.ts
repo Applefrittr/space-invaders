@@ -5,6 +5,8 @@ import { explosionList } from "./objects/explosions";
 import { fleet } from "./objects/invaderFleet";
 import { detectCollision } from "./utils/detectCollision";
 import { Level } from "./objects/levels";
+import InvExplosion from "../assets/sounds/invader-exlosion.mp3";
+import DefExplosion from "../assets/sounds/defender-explosion.mp3";
 
 export class Game {
   player: Defender;
@@ -103,6 +105,8 @@ export class Game {
               this.player.score += invader.scoreVal;
               projectileList.remove(projectile);
               fleet.destroyShip(invader);
+              const invExplosion = new Audio(InvExplosion);
+              invExplosion.play();
             } else if (hit && projectile.dy < 0)
               projectileList.remove(projectile);
             else return;
@@ -123,6 +127,8 @@ export class Game {
             this.player.hit = true;
             this.player.destroyed = true;
             this.player.animationLock = true;
+            const defExplosion = new Audio(DefExplosion);
+            defExplosion.play();
           }
           projectile.update(this.ctx);
         });
