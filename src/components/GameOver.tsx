@@ -64,6 +64,7 @@ function GameOver({
           username: inputRef.current.value,
         });
         setDisabled(true);
+        setErrMsg("Score submitted successfully");
       } catch (e) {
         setErrMsg("Something went wrong, try again later");
       }
