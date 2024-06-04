@@ -20,7 +20,7 @@ export const invaderFleet = () => {
   ) => {
     const maxColumns = 20;
     const maxRow = Math.ceil(count / maxColumns);
-    let posX = window.innerWidth - 128;
+    let posX = window.innerWidth - 64;
     const posY = 60;
     let currRow = 1;
 

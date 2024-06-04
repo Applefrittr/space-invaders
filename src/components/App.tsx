@@ -10,6 +10,7 @@ import ScoreBoard from "./ScoreBoard";
 import { trackList } from "../ts/objects/trackList";
 import Volume from "../assets/volume.svg";
 import Mute from "../assets/mute.svg";
+import useWindowSize from "../hooks/useWindowSize";
 
 function App() {
   const [defender, setDefender] = useState<Defender>();
@@ -18,11 +19,11 @@ function App() {
   const [score, setScore] = useState<number>(0);
   const [currTrack, setCurrTrack] = useState<string>(trackList[0].name);
   const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [windowWidth, windowHeight] = useWindowSize();
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const audio = useRef<HTMLAudioElement>(null);
   let trackIndex = 0;
-  //const firstPlay = false;
 
   const startGame = () => {
     const player = new Defender();
@@ -117,8 +118,8 @@ function App() {
       )}
       <canvas
         ref={bgCanvasRef}
-        width={innerWidth}
-        height={innerHeight}
+        width={windowWidth}
+        height={windowHeight}
         className="bg-canvas"
       ></canvas>
     </section>

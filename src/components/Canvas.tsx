@@ -4,6 +4,7 @@ import { Defender } from "../ts/classes/defender";
 import Pause from "./Pause";
 import GameOver from "./GameOver";
 import { AnimatePresence, motion } from "framer-motion";
+import useWindowSize from "../hooks/useWindowSize";
 
 interface propObjects {
   defender: Defender;
@@ -27,6 +28,7 @@ function Canvas({
   const [displayLvlBanner, setDisplayLvlBanner] = useState<boolean>(true);
   const [displayGameOver, setDisplayGameOver] = useState<boolean>(false);
   const [gameOverMsg, setGameOverMsg] = useState<string>("");
+  const [windowWidth, windowHeight] = useWindowSize();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const disablePauseBtnRef = useRef<boolean>();
@@ -110,8 +112,8 @@ function Canvas({
       <canvas
         ref={canvasRef}
         tabIndex={0}
-        width={innerWidth}
-        height={innerHeight}
+        width={windowWidth}
+        height={windowHeight}
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDown}
       ></canvas>
