@@ -11,6 +11,7 @@ import { trackList } from "../ts/objects/trackList";
 import Volume from "../assets/volume.svg";
 import Mute from "../assets/mute.svg";
 import useWindowSize from "../hooks/useWindowSize";
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 function App() {
   const [defender, setDefender] = useState<Defender>();
@@ -85,6 +86,13 @@ function App() {
       spaceCanvas.setContext(ctx);
       spaceCanvas.start();
     }
+
+    const FBAnonSignin = async () => {
+      const auth = getAuth();
+      await signInAnonymously(auth);
+    };
+
+    FBAnonSignin();
   }, []);
 
   return (
